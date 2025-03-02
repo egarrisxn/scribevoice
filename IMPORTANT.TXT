@@ -1,0 +1,3 @@
+Be careful about leaking API keys on GitHub
+
+Be sure to have authentication and rate limiting set up for your apps
