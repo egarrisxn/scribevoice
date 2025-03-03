@@ -42,10 +42,10 @@ export function OutputFormatSelector({
   const [value, setValue] = useState<OutputFormat>("notes");
 
   return (
-    <Card className="w-full space-y-2 py-10">
+    <Card className="from-background via-background to-accent/40 w-full space-y-2 bg-gradient-to-t py-10">
       <CardContent>
         <div className="mb-2 text-center font-semibold lg:text-lg">
-          <div>Output Format</div>
+          <p>Output Format</p>
         </div>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>

@@ -44,7 +44,7 @@ export default function TranscriptionOutput({
   };
 
   return (
-    <Card className="w-full">
+    <Card className="from-background via-background to-accent/40 w-full bg-gradient-to-t">
       <CardHeader>
         <CardTitle>Transcription Results</CardTitle>
       </CardHeader>
@@ -59,15 +59,20 @@ export default function TranscriptionOutput({
               {processedOutput || "No processed output available."}
             </div>
             <div className="mt-4 flex justify-end space-x-2">
-              <Button variant="outline" size="sm" onClick={() => copyToClipboard(processedOutput)}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="cursor-pointer"
+                onClick={() => copyToClipboard(processedOutput)}
+              >
                 {copied ? (
                   <>
-                    <Check className="mr-1 size-4 lg:size-5" />
+                    <Check className="mr-1 size-4" />
                     Copied
                   </>
                 ) : (
                   <>
-                    <Copy className="mr-1 size-4 lg:size-5" />
+                    <Copy className="mr-1 size-4" />
                     Copy
                   </>
                 )}
@@ -75,18 +80,20 @@ export default function TranscriptionOutput({
               <Button
                 variant="outline"
                 size="sm"
+                className="cursor-pointer"
                 onClick={() => downloadOutput(processedOutput, outputFormat)}
               >
-                <Download className="mr-1 size-4 lg:size-5" />
+                <Download className="mr-1 size-4" />
                 Download
               </Button>
               <Button
                 variant={isSaved ? "secondary" : "default"}
                 size="sm"
+                className="cursor-pointer"
                 onClick={onSave}
                 disabled={isSaved}
               >
-                <Save className="mr-1 size-4 lg:size-5" />
+                <Save className="mr-1 size-4" />
                 {isSaved ? "Saved" : "Save"}
               </Button>
             </div>
@@ -96,15 +103,20 @@ export default function TranscriptionOutput({
               {rawTranscription || "No raw transcription available."}
             </div>
             <div className="mt-4 flex justify-end space-x-2">
-              <Button variant="outline" size="sm" onClick={() => copyToClipboard(rawTranscription)}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="cursor-pointer"
+                onClick={() => copyToClipboard(rawTranscription)}
+              >
                 {copied ? (
                   <>
-                    <Check className="mr-1 size-4 lg:size-5" />
+                    <Check className="mr-1 size-4" />
                     Copied
                   </>
                 ) : (
                   <>
-                    <Copy className="mr-1 size-4 lg:size-5" />
+                    <Copy className="mr-1 size-4" />
                     Copy
                   </>
                 )}
@@ -112,9 +124,10 @@ export default function TranscriptionOutput({
               <Button
                 variant="outline"
                 size="sm"
+                className="cursor-pointer"
                 onClick={() => downloadOutput(rawTranscription, "raw")}
               >
-                <Download className="mr-1 size-4 lg:size-5" />
+                <Download className="mr-1 size-4" />
                 Download
               </Button>
             </div>

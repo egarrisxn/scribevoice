@@ -86,8 +86,8 @@ export default function SavedTranscriptions() {
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-center text-3xl font-bold md:text-4xl">Saved</h2>
+    <>
+      <h2 className="pb-4 text-center text-3xl font-bold md:text-4xl">Save Locally</h2>
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
@@ -95,7 +95,7 @@ export default function SavedTranscriptions() {
       >
         <div className="flex items-center justify-between px-4 py-3">
           <CollapsibleTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2 p-2">
+            <Button variant="ghost" className="flex cursor-pointer items-center gap-2 p-2">
               {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
               <h3 className="text-base leading-none font-semibold">
                 Saved Transcriptions ({transcriptions.length})
@@ -104,8 +104,8 @@ export default function SavedTranscriptions() {
           </CollapsibleTrigger>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="outline" size="sm" className="text-destructive">
-                <Trash2 className="mr-2 size-4" />
+              <Button variant="outline" size="sm" className="text-destructive cursor-pointer">
+                <Trash2 className="mr-1 size-4" />
                 Clear All
               </Button>
             </AlertDialogTrigger>
@@ -131,10 +131,13 @@ export default function SavedTranscriptions() {
         </div>
 
         <CollapsibleContent>
-          <ScrollArea className="h-[400px] p-2">
+          <ScrollArea className="h-[400px] px-2 pt-3">
             <div className="space-y-4">
               {transcriptions.map((transcription) => (
-                <Card key={transcription.id} className="overflow-hidden">
+                <Card
+                  key={transcription.id}
+                  className="from-background via-background to-accent/40 overflow-hidden rounded bg-gradient-to-t"
+                >
                   <CardHeader className="pb-2">
                     <div className="flex items-start justify-between">
                       <div>
@@ -151,7 +154,7 @@ export default function SavedTranscriptions() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="text-muted-foreground hover:text-destructive size-8"
+                            className="text-muted-foreground hover:text-destructive size-8 cursor-pointer"
                           >
                             <Trash2 className="size-4" />
                           </Button>
@@ -200,19 +203,19 @@ export default function SavedTranscriptions() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="mr-2 h-8"
+                      className="mr-2 cursor-pointer"
                       onClick={() =>
                         copyToClipboard(transcription.processedOutput, transcription.id)
                       }
                     >
                       {copied === transcription.id ? (
                         <>
-                          <Check className="mr-1.5 h-3.5 w-3.5" />
+                          <Check className="mr-1 size-4" />
                           Copied
                         </>
                       ) : (
                         <>
-                          <Copy className="mr-1.5 h-3.5 w-3.5" />
+                          <Copy className="mr-1 size-4" />
                           Copy
                         </>
                       )}
@@ -220,10 +223,10 @@ export default function SavedTranscriptions() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="h-8"
+                      className="cursor-pointer"
                       onClick={() => downloadTranscription(transcription)}
                     >
-                      <Download className="mr-1.5 h-3.5 w-3.5" />
+                      <Download className="mr-1 size-4" />
                       Download
                     </Button>
                   </CardFooter>
@@ -233,6 +236,6 @@ export default function SavedTranscriptions() {
           </ScrollArea>
         </CollapsibleContent>
       </Collapsible>
-    </div>
+    </>
   );
 }

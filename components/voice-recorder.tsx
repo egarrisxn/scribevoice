@@ -16,22 +16,27 @@ export default function VoiceRecorder({
 }) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isMediaRecorderSupported, setIsMediaRecorderSupported] = useState(true);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    setIsMobile(isTouchDevice);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
-    // Check if MediaRecorder API is supported
     const isMediaDevicesSupported = !!(
       navigator.mediaDevices && navigator.mediaDevices.getUserMedia
     );
@@ -39,11 +44,6 @@ export default function VoiceRecorder({
     setIsMediaRecorderSupported(isMediaDevicesSupported && isMediaRecorderSupported);
 
     return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-
-      // Ensure we stop any ongoing recording when component unmounts
       if (mediaRecorderRef.current && isRecording) {
         try {
           mediaRecorderRef.current.stop();
@@ -55,13 +55,22 @@ export default function VoiceRecorder({
   }, [isRecording]);
 
   const getMimeType = () => {
-    if (
-      MediaRecorder &&
-      MediaRecorder.isTypeSupported &&
-      MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
-    ) {
-      return "audio/webm;codecs=opus";
+    const types = [
+      "audio/webm",
+      "audio/mp4",
+      "audio/ogg",
+      "audio/wav",
+      "audio/webm;codecs=opus",
+      "audio/webm;codecs=pcm",
+      "audio/webm;codecs=vorbis",
+    ];
+
+    for (const type of types) {
+      if (MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(type)) {
+        return type;
+      }
     }
+
     return "audio/webm";
   };
 
@@ -70,7 +79,6 @@ export default function VoiceRecorder({
       setError(null);
       audioChunksRef.current = [];
 
-      // Check if MediaRecorder is supported
       if (!isMediaRecorderSupported) {
         setError(
           "Your browser doesn't support audio recording. Please try uploading an audio file instead or use a different browser.",
@@ -78,7 +86,6 @@ export default function VoiceRecorder({
         return;
       }
 
-      // Request audio permission with constraints that work better on mobile
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: {
           echoCancellation: true,
@@ -87,11 +94,9 @@ export default function VoiceRecorder({
         },
       });
 
-      // Get supported MIME type
       const mimeType = getMimeType();
       console.log("Mime Type that was selected:", mimeType);
 
-      // Create MediaRecorder with options
       const options = { mimeType };
       let mediaRecorder;
 
@@ -115,11 +120,7 @@ export default function VoiceRecorder({
 
       mediaRecorder.onerror = (event) => {
         console.error("MediaRecorder error:", event);
-        if (event.error && event.error.name) {
-          setError(`An error occurred while recording: ${event.error.name}`);
-        } else {
-          setError("An error occurred while recording. Please try again.");
-        }
+        setError("An error occurred while recording. Please try again.");
         stopRecording();
       };
 
@@ -130,9 +131,7 @@ export default function VoiceRecorder({
           return;
         }
 
-        // Create audio blob with the correct MIME type
         const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
-        console.log("audioBlob type:", audioBlob.type);
 
         if (audioBlob.size < 100) {
           setError("The recorded audio is too short or empty. Please try again and speak clearly.");
@@ -161,30 +160,13 @@ export default function VoiceRecorder({
           setIsProcessing(false);
         }
 
-        // Stop all tracks from the stream
         stream.getTracks().forEach((track) => track.stop());
       };
 
-      // Set a shorter timeslice for mobile devices to capture data more frequently
-      const timeslice = isMobile ? 2000 : 10000; // 2 seconds for mobile
-
-      // Resume AudioContext on user gesture
-      const AudioContextConstructor = window.AudioContext;
-      if (AudioContextConstructor) {
-        const audioContext = new AudioContextConstructor();
-        if (audioContext.state === "suspended") {
-          await audioContext.resume();
-          console.log("AudioContext resumed on user gesture");
-        }
-      }
+      const timeslice = isMobile ? 1000 : 10000;
 
       mediaRecorder.start(timeslice);
       setIsRecording(true);
-      setRecordingTime(0);
-
-      timerRef.current = setInterval(() => {
-        setRecordingTime((prev) => prev + 1);
-      }, 1000);
 
       toast.success("Recording started. Speak clearly into your microphone.");
     } catch (error: any) {
@@ -230,10 +212,6 @@ export default function VoiceRecorder({
 
       setIsRecording(false);
 
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-
       toast.info("Recording stopped. Processing your audio...");
     }
   };
@@ -246,13 +224,10 @@ export default function VoiceRecorder({
     setIsProcessing(true);
 
     try {
-      // Check file size
       if (file.size > 25 * 1024 * 1024) {
-        // 25MB limit
         throw new Error("File is too large. Please upload an audio file smaller than 25MB.");
       }
 
-      // Check file type
       const validTypes = [
         "audio/mp3",
         "audio/mpeg",
@@ -287,53 +262,55 @@ export default function VoiceRecorder({
       );
     } finally {
       setIsProcessing(false);
-      // Reset the file input
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
     }
   };
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
-
   return (
-    <Card className="w-full space-y-2 py-10">
+    <Card className="from-background via-background to-accent/40 w-full space-y-2 bg-gradient-to-t py-10">
       <CardContent>
         <div className="flex flex-col items-center space-y-4">
           <div className="mb-2 text-center font-semibold lg:text-lg">
             {isRecording ? (
-              <div className="animate-pulse text-red-500">
-                Recording: {formatTime(recordingTime)}
-              </div>
+              <p className="animate-pulse text-red-500">Recording in progress</p>
             ) : isProcessing ? (
-              <div className="text-blue-500">Processing audio...</div>
+              <p className="text-blue-500">Processing audio...</p>
             ) : (
-              <div>Ready to record</div>
+              <p> {isMobile ? "" : "Ready to record"}</p>
             )}
           </div>
 
           {error && (
-            <Alert variant="destructive" className="mb-2">
+            <Alert variant="destructive" className="mb-4">
               <AlertCircle className="size-4" />
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
 
+          {isMobile && (
+            <Alert className="mb-4">
+              <AlertCircle className="size-4" />
+              <AlertTitle>Mobile Device Detected</AlertTitle>
+              <AlertDescription>
+                Voice recording is only available on desktop browsers. Please use the file upload
+                option instead.
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div className="flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
             {!isRecording && !isProcessing ? (
               <>
-                {isMediaRecorderSupported && (
+                {isMediaRecorderSupported && !isMobile && (
                   <Button
                     onClick={startRecording}
                     size="lg"
-                    className="w-full bg-red-500 text-white hover:bg-red-600 sm:w-auto"
+                    className="w-full cursor-pointer bg-green-600 text-white hover:bg-green-600/90 sm:w-auto"
                   >
-                    <Mic className="mr-1 size-4 lg:mr-0 lg:size-5" />
+                    <Mic className="size-4.5" />
                     Start Recording
                   </Button>
                 )}
@@ -349,11 +326,11 @@ export default function VoiceRecorder({
                   />
                   <Button
                     onClick={() => fileInputRef.current?.click()}
-                    variant="outline"
+                    variant={isMobile ? "default" : "outline"}
                     size="lg"
-                    className="w-full sm:w-auto"
+                    className="w-full cursor-pointer sm:w-auto"
                   >
-                    <Upload className="mr-1 size-4 lg:mr-0 lg:size-5" />
+                    <Upload className="mr-1 size-4" />
                     Upload Audio
                   </Button>
                 </div>
@@ -363,14 +340,14 @@ export default function VoiceRecorder({
                 onClick={stopRecording}
                 size="lg"
                 variant="outline"
-                className="border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600"
+                className="text-destructive cursor-pointer"
               >
-                <Square className="mr-2 h-5 w-5" />
+                <Square className="mr-1 size-4" />
                 Stop Recording
               </Button>
             ) : (
               <Button disabled size="lg">
-                <Loader2 className="mr-1 size-4 animate-spin lg:size-5" />
+                <Loader2 className="mr-1 size-4 animate-spin" />
                 Processing...
               </Button>
             )}
@@ -379,12 +356,16 @@ export default function VoiceRecorder({
       </CardContent>
       <CardFooter className="text-muted-foreground mx-auto max-w-[30rem] text-center text-xs lg:text-sm">
         <p>
-          {isMediaRecorderSupported ? (
+          {isMobile ? (
             <>
-              Click the button above to start recording. Speak clearly into your microphone. When
+              Upload an audio file from your device to transcribe it. Supported formats include MP3,
+              WAV, OGG, M4A, and more.
+            </>
+          ) : isMediaRecorderSupported ? (
+            <>
+              Click the record button to start recording. Speak clearly into your microphone. When
               finished, click stop to process your recording.
-              {isMobile &&
-                " For best results on mobile, hold your device close to your mouth while speaking."}
+              <br />
               <br />
               Alternatively, you can upload an existing audio file.
             </>
@@ -399,150 +380,3 @@ export default function VoiceRecorder({
     </Card>
   );
 }
-
-// "use client";
-
-// import { useState, useRef, useEffect } from "react";
-// import { toast } from "sonner";
-// import { Mic, Square, Loader2 } from "lucide-react";
-// import { transcribeAudio } from "@/lib/openai";
-// import { Button } from "./ui/button";
-// import { Card, CardContent, CardFooter } from "./ui/card";
-
-// export default function VoiceRecorder({
-//   onTranscriptionComplete,
-// }: {
-//   onTranscriptionComplete: (text: string) => void;
-// }) {
-//   const [isRecording, setIsRecording] = useState(false);
-//   const [isProcessing, setIsProcessing] = useState(false);
-//   const [recordingTime, setRecordingTime] = useState(0);
-//   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-//   const audioChunksRef = useRef<Blob[]>([]);
-//   const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-//   useEffect(() => {
-//     return () => {
-//       if (timerRef.current) {
-//         clearInterval(timerRef.current);
-//       }
-//     };
-//   }, []);
-
-//   const startRecording = async () => {
-//     try {
-//       audioChunksRef.current = [];
-//       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-//       const mediaRecorder = new MediaRecorder(stream);
-//       mediaRecorderRef.current = mediaRecorder;
-
-//       mediaRecorder.ondataavailable = (event) => {
-//         if (event.data.size > 0) {
-//           audioChunksRef.current.push(event.data);
-//         }
-//       };
-
-//       mediaRecorder.onstop = async () => {
-//         const audioBlob = new Blob(audioChunksRef.current, {
-//           type: "audio/webm",
-//         });
-
-//         try {
-//           setIsProcessing(true);
-//           const transcription = await transcribeAudio(audioBlob);
-//           onTranscriptionComplete(transcription);
-//         } catch (error) {
-//           console.error("Transcription error:", error);
-//           toast.error("Processing failed. There was an error transcribing your audio.");
-//         } finally {
-//           setIsProcessing(false);
-//         }
-
-//         stream.getTracks().forEach((track) => track.stop());
-//       };
-
-//       mediaRecorder.start();
-//       setIsRecording(true);
-//       setRecordingTime(0);
-
-//       timerRef.current = setInterval(() => {
-//         setRecordingTime((prev) => prev + 1);
-//       }, 1000);
-
-//       toast.success("Recording started. Speak clearly into your microphone.");
-//     } catch (error) {
-//       console.error("Error starting recording:", error);
-//       toast.error("Microphone access denied. Please allow microphone access.");
-//     }
-//   };
-
-//   const stopRecording = () => {
-//     if (mediaRecorderRef.current && isRecording) {
-//       mediaRecorderRef.current.stop();
-//       setIsRecording(false);
-
-//       if (timerRef.current) {
-//         clearInterval(timerRef.current);
-//       }
-
-//       toast.info("Recording stopped. Processing your audio...");
-//     }
-//   };
-
-//   const formatTime = (seconds: number) => {
-//     const mins = Math.floor(seconds / 60);
-//     const secs = seconds % 60;
-//     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-//   };
-
-//   return (
-//     <Card className="w-full">
-//       <CardContent>
-//         <div className="mb-2 text-center font-semibold lg:text-lg">
-//           {isRecording ? (
-//             <div className="animate-pulse text-red-500">Recording: {formatTime(recordingTime)}</div>
-//           ) : isProcessing ? (
-//             <div className="text-blue-500">Processing audio...</div>
-//           ) : (
-//             <div>Ready to record</div>
-//           )}
-//         </div>
-//         <div className="flex justify-center space-x-4">
-//           {!isRecording && !isProcessing ? (
-//             <Button
-//               onClick={startRecording}
-//               size="lg"
-//               variant="default"
-//               className="bg-red-500 text-white hover:bg-red-600"
-//             >
-//               <Mic className="mr-1 size-4 lg:mr-0 lg:size-5" />
-//               Start Recording
-//             </Button>
-//           ) : isRecording ? (
-//             <Button
-//               onClick={stopRecording}
-//               size="lg"
-//               variant="outline"
-//               className="border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600"
-//             >
-//               <Square className="mr-1 size-4 lg:mr-0 lg:size-5" />
-//               Stop Recording
-//             </Button>
-//           ) : (
-//             <Button disabled size="lg">
-//               <Loader2 className="mr-1 size-4 animate-spin lg:size-5" />
-//               Processing...
-//             </Button>
-//           )}
-//         </div>
-//       </CardContent>
-//       <CardFooter className="text-muted-foreground mx-auto max-w-[18rem] text-center text-xs">
-//         <p>
-//           Press button to start. Speak clearly into your microphone. When finished, press stop to
-//           process your recording.
-//         </p>
-//       </CardFooter>
-//     </Card>
-//   );
-// }

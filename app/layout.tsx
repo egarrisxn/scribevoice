@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -86,9 +84,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
           {children}
-          <Footer />
           <Toaster />
         </ThemeProvider>
       </body>
