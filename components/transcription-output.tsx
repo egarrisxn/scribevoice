@@ -62,12 +62,12 @@ export default function TranscriptionOutput({
               <Button variant="outline" size="sm" onClick={() => copyToClipboard(processedOutput)}>
                 {copied ? (
                   <>
-                    <Check className="mr-2 size-4" />
+                    <Check className="mr-1 size-4 lg:size-5" />
                     Copied
                   </>
                 ) : (
                   <>
-                    <Copy className="mr-2 size-4" />
+                    <Copy className="mr-1 size-4 lg:size-5" />
                     Copy
                   </>
                 )}
@@ -77,7 +77,7 @@ export default function TranscriptionOutput({
                 size="sm"
                 onClick={() => downloadOutput(processedOutput, outputFormat)}
               >
-                <Download className="mr-2 size-4" />
+                <Download className="mr-1 size-4 lg:size-5" />
                 Download
               </Button>
               <Button
@@ -86,7 +86,7 @@ export default function TranscriptionOutput({
                 onClick={onSave}
                 disabled={isSaved}
               >
-                <Save className="mr-2 size-4" />
+                <Save className="mr-1 size-4 lg:size-5" />
                 {isSaved ? "Saved" : "Save"}
               </Button>
             </div>
@@ -99,12 +99,12 @@ export default function TranscriptionOutput({
               <Button variant="outline" size="sm" onClick={() => copyToClipboard(rawTranscription)}>
                 {copied ? (
                   <>
-                    <Check className="mr-2 size-4" />
+                    <Check className="mr-1 size-4 lg:size-5" />
                     Copied
                   </>
                 ) : (
                   <>
-                    <Copy className="mr-2 size-4" />
+                    <Copy className="mr-1 size-4 lg:size-5" />
                     Copy
                   </>
                 )}
@@ -114,14 +114,14 @@ export default function TranscriptionOutput({
                 size="sm"
                 onClick={() => downloadOutput(rawTranscription, "raw")}
               >
-                <Download className="mr-2 size-4" />
+                <Download className="mr-1 size-4 lg:size-5" />
                 Download
               </Button>
             </div>
           </TabsContent>
         </Tabs>
       </CardContent>
-      <CardFooter className="text-muted-foreground text-sm">
+      <CardFooter className="text-muted-foreground mx-auto mt-2 text-center text-xs md:text-sm">
         <p>
           You can switch between the processed output and raw transcription using the tabs above.
         </p>

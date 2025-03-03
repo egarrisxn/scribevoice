@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers";
 import Navbar from "@/components/navbar";
-import { Toaster } from "@/components/ui/sonner";
-import "./globals.css";
 import Footer from "@/components/footer";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,20 +25,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} max-w-screen overflow-x-hidden font-sans antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <main className="grid min-h-[100dvh] w-full grid-rows-[auto_1fr_auto]">
-            <Navbar />
-            {children}
-            <Footer />
-          </main>
+          <Navbar />
+          {children}
+          <Footer />
           <Toaster />
         </ThemeProvider>
       </body>

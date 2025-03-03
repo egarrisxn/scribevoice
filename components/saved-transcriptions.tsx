@@ -86,148 +86,153 @@ export default function SavedTranscriptions() {
   }
 
   return (
-    <Collapsible
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      className="bg-card w-full rounded-lg border shadow-sm"
-    >
-      <div className="flex items-center justify-between px-4 py-3">
-        <CollapsibleTrigger asChild>
-          <Button variant="ghost" className="flex items-center gap-2 p-2">
-            {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
-            <h3 className="text-base leading-none font-semibold">
-              Saved Transcriptions ({transcriptions.length})
-            </h3>
-          </Button>
-        </CollapsibleTrigger>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="outline" size="sm" className="text-destructive">
-              <Trash2 className="mr-2 size-4" />
-              Clear All
+    <div className="space-y-4">
+      <h2 className="text-center text-3xl font-bold md:text-4xl">Saved</h2>
+      <Collapsible
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        className="bg-card w-full rounded-lg border shadow-sm"
+      >
+        <div className="flex items-center justify-between px-4 py-3">
+          <CollapsibleTrigger asChild>
+            <Button variant="ghost" className="flex items-center gap-2 p-2">
+              {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+              <h3 className="text-base leading-none font-semibold">
+                Saved Transcriptions ({transcriptions.length})
+              </h3>
             </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This will permanently delete all your saved transcriptions. This action cannot be
-                undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handleClearAll}
-                className="bg-destructive text-destructive-foreground"
-              >
-                Delete All
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
+          </CollapsibleTrigger>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" size="sm" className="text-destructive">
+                <Trash2 className="mr-2 size-4" />
+                Clear All
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently delete all your saved transcriptions. This action cannot be
+                  undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleClearAll}
+                  className="bg-destructive text-destructive-foreground"
+                >
+                  Delete All
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
 
-      <CollapsibleContent>
-        <ScrollArea className="h-[400px] p-2">
-          <div className="space-y-4">
-            {transcriptions.map((transcription) => (
-              <Card key={transcription.id} className="overflow-hidden">
-                <CardHeader className="pb-2">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-base">{transcription.title}</CardTitle>
-                      <CardDescription>
-                        {formatDistanceToNow(new Date(transcription.timestamp), {
-                          addSuffix: true,
-                        })}{" "}
-                        •{formatTitle(transcription.outputFormat)}
-                      </CardDescription>
-                    </div>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-muted-foreground hover:text-destructive size-8"
-                        >
-                          <Trash2 className="size-4" />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Delete this transcription?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            This action cannot be undone.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => handleDelete(transcription.id)}
-                            className="bg-destructive text-destructive-foreground"
+        <CollapsibleContent>
+          <ScrollArea className="h-[400px] p-2">
+            <div className="space-y-4">
+              {transcriptions.map((transcription) => (
+                <Card key={transcription.id} className="overflow-hidden">
+                  <CardHeader className="pb-2">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <CardTitle className="text-base">{transcription.title}</CardTitle>
+                        <CardDescription>
+                          {formatDistanceToNow(new Date(transcription.timestamp), {
+                            addSuffix: true,
+                          })}{" "}
+                          •{formatTitle(transcription.outputFormat)}
+                        </CardDescription>
+                      </div>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-muted-foreground hover:text-destructive size-8"
                           >
-                            Delete
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
-                </CardHeader>
-                <CardContent className="pb-2">
-                  <Tabs defaultValue="processed">
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="processed">
-                        {formatTitle(transcription.outputFormat)}
-                      </TabsTrigger>
-                      <TabsTrigger value="raw">Raw Transcription</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="processed" className="mt-2">
-                      <div className="bg-muted/50 max-h-[150px] overflow-y-auto rounded-md p-3 text-sm whitespace-pre-wrap">
-                        {transcription.processedOutput}
-                      </div>
-                    </TabsContent>
-                    <TabsContent value="raw" className="mt-2">
-                      <div className="bg-muted/50 max-h-[150px] overflow-y-auto rounded-md p-3 text-sm whitespace-pre-wrap">
-                        {transcription.rawTranscription}
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-                <CardFooter className="flex justify-end pt-2 pb-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mr-2 h-8"
-                    onClick={() => copyToClipboard(transcription.processedOutput, transcription.id)}
-                  >
-                    {copied === transcription.id ? (
-                      <>
-                        <Check className="mr-1.5 h-3.5 w-3.5" />
-                        Copied
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="mr-1.5 h-3.5 w-3.5" />
-                        Copy
-                      </>
-                    )}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8"
-                    onClick={() => downloadTranscription(transcription)}
-                  >
-                    <Download className="mr-1.5 h-3.5 w-3.5" />
-                    Download
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        </ScrollArea>
-      </CollapsibleContent>
-    </Collapsible>
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete this transcription?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(transcription.id)}
+                              className="bg-destructive text-destructive-foreground"
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pb-2">
+                    <Tabs defaultValue="processed">
+                      <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="processed">
+                          {formatTitle(transcription.outputFormat)}
+                        </TabsTrigger>
+                        <TabsTrigger value="raw">Raw Transcription</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="processed" className="mt-2">
+                        <div className="bg-muted/50 max-h-[150px] overflow-y-auto rounded-md p-3 text-sm whitespace-pre-wrap">
+                          {transcription.processedOutput}
+                        </div>
+                      </TabsContent>
+                      <TabsContent value="raw" className="mt-2">
+                        <div className="bg-muted/50 max-h-[150px] overflow-y-auto rounded-md p-3 text-sm whitespace-pre-wrap">
+                          {transcription.rawTranscription}
+                        </div>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                  <CardFooter className="flex justify-end pt-2 pb-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mr-2 h-8"
+                      onClick={() =>
+                        copyToClipboard(transcription.processedOutput, transcription.id)
+                      }
+                    >
+                      {copied === transcription.id ? (
+                        <>
+                          <Check className="mr-1.5 h-3.5 w-3.5" />
+                          Copied
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="mr-1.5 h-3.5 w-3.5" />
+                          Copy
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8"
+                      onClick={() => downloadTranscription(transcription)}
+                    >
+                      <Download className="mr-1.5 h-3.5 w-3.5" />
+                      Download
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          </ScrollArea>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
   );
 }

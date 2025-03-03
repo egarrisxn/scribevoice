@@ -124,6 +124,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground grid min-h-[100dvh] w-full max-w-screen grid-rows-[auto_1fr_auto] overflow-x-hidden font-sans antialiased;
   }
 }

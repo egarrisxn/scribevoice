@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Mic, Square, Loader2 } from "lucide-react";
 import { transcribeAudio } from "@/lib/openai";
 import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent, CardFooter } from "./ui/card";
 
 export default function VoiceRecorder({
   onTranscriptionComplete,
@@ -95,56 +95,52 @@ export default function VoiceRecorder({
   };
 
   return (
-    <Card className="shadow-foreground/10 w-full shadow-[1px_2px_8px_0px]">
-      <CardContent className="p-6">
-        <div className="flex flex-col items-center space-y-5">
-          <div className="mb-2 text-center text-xl font-semibold lg:text-2xl">
-            {isRecording ? (
-              <div className="animate-pulse text-red-500">
-                Recording: {formatTime(recordingTime)}
-              </div>
-            ) : isProcessing ? (
-              <div className="text-blue-500">Processing audio...</div>
-            ) : (
-              <div>Record Your Voice</div>
-            )}
-          </div>
-
-          <div className="flex justify-center space-x-4">
-            {!isRecording && !isProcessing ? (
-              <Button
-                onClick={startRecording}
-                size="lg"
-                variant="default"
-                className="bg-red-500 text-white hover:bg-red-600 lg:h-11 lg:text-lg"
-              >
-                <Mic className="mr-2 size-5 lg:mr-1 lg:size-6" />
-                Start Recording
-              </Button>
-            ) : isRecording ? (
-              <Button
-                onClick={stopRecording}
-                size="lg"
-                variant="outline"
-                className="border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600 lg:h-11 lg:text-lg"
-              >
-                <Square className="mr-2 size-5 lg:mr-1 lg:size-6" />
-                Stop Recording
-              </Button>
-            ) : (
-              <Button disabled size="lg">
-                <Loader2 className="mr-2 size-5 animate-spin" />
-                Processing...
-              </Button>
-            )}
-          </div>
-
-          <p className="text-muted-foreground mt-5 w-[18rem] text-center text-xs">
-            Click the button above to start recording. Speak clearly into your microphone. When
-            finished, click stop to process your recording.
-          </p>
+    <Card className="w-full">
+      <CardContent>
+        <div className="mb-2 text-center font-semibold lg:text-lg">
+          {isRecording ? (
+            <div className="animate-pulse text-red-500">Recording: {formatTime(recordingTime)}</div>
+          ) : isProcessing ? (
+            <div className="text-blue-500">Processing audio...</div>
+          ) : (
+            <div>Ready to record</div>
+          )}
+        </div>
+        <div className="flex justify-center space-x-4">
+          {!isRecording && !isProcessing ? (
+            <Button
+              onClick={startRecording}
+              size="lg"
+              variant="default"
+              className="bg-red-500 text-white hover:bg-red-600"
+            >
+              <Mic className="mr-1 size-4 lg:mr-0 lg:size-5" />
+              Start Recording
+            </Button>
+          ) : isRecording ? (
+            <Button
+              onClick={stopRecording}
+              size="lg"
+              variant="outline"
+              className="border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600"
+            >
+              <Square className="mr-1 size-4 lg:mr-0 lg:size-5" />
+              Stop Recording
+            </Button>
+          ) : (
+            <Button disabled size="lg">
+              <Loader2 className="mr-1 size-4 animate-spin lg:size-5" />
+              Processing...
+            </Button>
+          )}
         </div>
       </CardContent>
+      <CardFooter className="text-muted-foreground mx-auto max-w-[18rem] text-center text-xs">
+        <p>
+          Press button to start. Speak clearly into your microphone. When finished, press stop to
+          process your recording.
+        </p>
+      </CardFooter>
     </Card>
   );
 }
