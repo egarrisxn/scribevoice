@@ -84,7 +84,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto w-full max-w-3xl p-4 sm:p-6">
-      <section className="-full grid place-content-center place-items-center gap-4 py-12 text-center sm:py-28">
+      <section className="grid w-full place-content-center place-items-center gap-4 py-12 text-center sm:py-28">
         <Badge>Use Your Voice!</Badge>
 
         <h1 className="text-[4rem] leading-none font-bold tracking-tight sm:text-[6rem]">
@@ -96,18 +96,15 @@ export default function Home() {
         </p>
       </section>
 
-      {/* <div className="flex flex-col sm:flex-row sm:gap-4"> */}
-      <div className="flex flex-col">
-        <section className="mx-auto w-full max-w-[22rem] space-y-4 py-6 sm:max-w-[28rem] sm:py-12">
-          <h2 className="text-center text-3xl font-bold md:text-4xl">Record</h2>
-          <VoiceRecorder onTranscriptionComplete={handleTranscriptionComplete} />
-        </section>
+      <section className="mx-auto w-full max-w-[32rem] space-y-4 py-6 sm:max-w-[40rem] sm:py-12 md:max-w-[48rem]">
+        <h2 className="text-center text-3xl font-bold md:text-4xl">Record</h2>
+        <VoiceRecorder onTranscriptionComplete={handleTranscriptionComplete} />
+      </section>
 
-        <section className="mx-auto w-full max-w-[22rem] space-y-4 py-6 sm:max-w-[28rem] sm:py-12">
-          <h2 className="text-center text-3xl font-bold md:text-4xl">Format</h2>
-          <OutputFormatSelector onFormatChange={handleFormatChange} />
-        </section>
-      </div>
+      <section className="mx-auto w-full max-w-[32rem] space-y-4 py-6 sm:max-w-[40rem] sm:py-12 md:max-w-[48rem]">
+        <h2 className="text-center text-3xl font-bold md:text-4xl">Format</h2>
+        <OutputFormatSelector onFormatChange={handleFormatChange} />
+      </section>
 
       <div className="mx-auto w-full max-w-[32rem] space-y-20 py-6 sm:max-w-[40rem] sm:space-y-24 sm:py-12 md:max-w-[48rem]">
         {isProcessing ? (

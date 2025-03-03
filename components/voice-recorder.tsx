@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Mic, Square, Loader2, AlertCircle, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { transcribeAudio } from "@/lib/openai";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -26,11 +26,11 @@ export default function VoiceRecorder({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // Detect if user is on mobile
-    const userAgent = navigator.userAgent || navigator.vendor;
-    const isMobileDevice = /android|iphone|ipad|ipod/i.test(userAgent.toLowerCase());
-    setIsMobile(isMobileDevice);
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    setIsMobile(isTouchDevice);
+  }, []);
 
+  useEffect(() => {
     // Check if MediaRecorder API is supported
     const isMediaDevicesSupported = !!(
       navigator.mediaDevices && navigator.mediaDevices.getUserMedia
@@ -89,7 +89,7 @@ export default function VoiceRecorder({
 
       // Get supported MIME type
       const mimeType = getMimeType();
-      console.log("Using MIME type:", mimeType);
+      console.log("Mime Type that was selected:", mimeType);
 
       // Create MediaRecorder with options
       const options = { mimeType };
@@ -132,6 +132,7 @@ export default function VoiceRecorder({
 
         // Create audio blob with the correct MIME type
         const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
+        console.log("audioBlob type:", audioBlob.type);
 
         if (audioBlob.size < 100) {
           setError("The recorded audio is too short or empty. Please try again and speak clearly.");
@@ -300,8 +301,8 @@ export default function VoiceRecorder({
   };
 
   return (
-    <Card className="w-full">
-      <CardContent className="pt-2">
+    <Card className="w-full space-y-2 py-10">
+      <CardContent>
         <div className="flex flex-col items-center space-y-4">
           <div className="mb-2 text-center font-semibold lg:text-lg">
             {isRecording ? (
@@ -374,27 +375,27 @@ export default function VoiceRecorder({
               </Button>
             )}
           </div>
-
-          <p className="text-muted-foreground mt-4 max-w-[20rem] text-center text-xs lg:text-sm">
-            {isMediaRecorderSupported ? (
-              <>
-                Click the button above to start recording. Speak clearly into your microphone. When
-                finished, click stop to process your recording.
-                {isMobile &&
-                  " For best results on mobile, hold your device close to your mouth while speaking."}
-                <br />
-                <br />
-                Alternatively, you can upload an existing audio file.
-              </>
-            ) : (
-              <>
-                Your browser doesn&apos;t support direct audio recording. Please upload an audio
-                file instead or try using a different browser like Chrome or Firefox.
-              </>
-            )}
-          </p>
         </div>
       </CardContent>
+      <CardFooter className="text-muted-foreground mx-auto max-w-[30rem] text-center text-xs lg:text-sm">
+        <p>
+          {isMediaRecorderSupported ? (
+            <>
+              Click the button above to start recording. Speak clearly into your microphone. When
+              finished, click stop to process your recording.
+              {isMobile &&
+                " For best results on mobile, hold your device close to your mouth while speaking."}
+              <br />
+              Alternatively, you can upload an existing audio file.
+            </>
+          ) : (
+            <>
+              Your browser doesn&apos;t support direct audio recording. Please upload an audio file
+              instead or try using a different browser like Chrome or Firefox.
+            </>
+          )}
+        </p>
+      </CardFooter>
     </Card>
   );
 }

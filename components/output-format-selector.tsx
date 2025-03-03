@@ -42,7 +42,7 @@ export function OutputFormatSelector({
   const [value, setValue] = useState<OutputFormat>("notes");
 
   return (
-    <Card className="w-full">
+    <Card className="w-full space-y-2 py-10">
       <CardContent>
         <div className="mb-2 text-center font-semibold lg:text-lg">
           <div>Output Format</div>
@@ -54,7 +54,7 @@ export function OutputFormatSelector({
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="w-full justify-between"
+              className="mx-auto flex w-full max-w-[20rem] justify-between"
             >
               {value ? formats.find((format) => format.value === value)?.label : "Select format..."}
               <ChevronsUpDown className="ml-2 size-5 shrink-0 opacity-50" />
@@ -93,7 +93,7 @@ export function OutputFormatSelector({
           </PopoverContent>
         </Popover>
       </CardContent>
-      <CardFooter className="text-muted-foreground mx-auto max-w-[20rem] text-center text-xs lg:text-sm">
+      <CardFooter className="text-muted-foreground mx-auto max-w-[30rem] text-center text-xs lg:text-sm">
         <p>
           Select your preferred output format. Afterwards, you may copy or save the results. If you
           are not satisfied, try again!
