@@ -50,13 +50,13 @@ export default function SavedTranscriptions() {
   const handleDelete = (id: string) => {
     deleteTranscription(id);
     setTranscriptions((prev) => prev.filter((t) => t.id !== id));
-    toast("The transcription has been removed from your saved items.");
+    toast.info("The transcription has been removed from your saved items.");
   };
 
   const handleClearAll = () => {
     clearAllTranscriptions();
     setTranscriptions([]);
-    toast("All saved transcriptions have been removed.");
+    toast.info("All saved transcriptions have been removed.");
   };
 
   const copyToClipboard = (text: string, id: string) => {

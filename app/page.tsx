@@ -79,7 +79,7 @@ export default function Home() {
     });
 
     setIsSaved(true);
-    toast("Your transcription has been saved and can be accessed later.");
+    toast.info("Your transcription has been saved and can be accessed later.");
   };
 
   return (
@@ -96,13 +96,14 @@ export default function Home() {
         </p>
       </section>
 
-      <div className="flex flex-col sm:flex-row sm:gap-4">
-        <section className="mx-auto w-full max-w-[22rem] space-y-4 py-6 sm:py-12">
+      {/* <div className="flex flex-col sm:flex-row sm:gap-4"> */}
+      <div className="flex flex-col">
+        <section className="mx-auto w-full max-w-[22rem] space-y-4 py-6 sm:max-w-[28rem] sm:py-12">
           <h2 className="text-center text-3xl font-bold md:text-4xl">Record</h2>
           <VoiceRecorder onTranscriptionComplete={handleTranscriptionComplete} />
         </section>
 
-        <section className="mx-auto w-full max-w-[22rem] space-y-4 py-6 sm:py-12">
+        <section className="mx-auto w-full max-w-[22rem] space-y-4 py-6 sm:max-w-[28rem] sm:py-12">
           <h2 className="text-center text-3xl font-bold md:text-4xl">Format</h2>
           <OutputFormatSelector onFormatChange={handleFormatChange} />
         </section>

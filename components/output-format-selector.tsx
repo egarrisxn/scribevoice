@@ -93,7 +93,7 @@ export function OutputFormatSelector({
           </PopoverContent>
         </Popover>
       </CardContent>
-      <CardFooter className="text-muted-foreground mx-auto max-w-[18rem] text-center text-xs">
+      <CardFooter className="text-muted-foreground mx-auto max-w-[20rem] text-center text-xs lg:text-sm">
         <p>
           Select your preferred output format. Afterwards, you may copy or save the results. If you
           are not satisfied, try again!
