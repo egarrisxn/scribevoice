@@ -55,24 +55,13 @@ export default function VoiceRecorder({
   }, [isRecording]);
 
   const getMimeType = () => {
-    // Different browsers and devices support different MIME types
-    const types = [
-      "audio/webm",
-      "audio/mp4",
-      "audio/ogg",
-      "audio/wav",
-      "audio/webm;codecs=opus",
-      "audio/webm;codecs=pcm",
-      "audio/webm;codecs=vorbis",
-    ];
-
-    for (const type of types) {
-      if (MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(type)) {
-        return type;
-      }
+    if (
+      MediaRecorder &&
+      MediaRecorder.isTypeSupported &&
+      MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+    ) {
+      return "audio/webm;codecs=opus";
     }
-
-    // Fallback to a common type
     return "audio/webm";
   };
 
@@ -126,7 +115,11 @@ export default function VoiceRecorder({
 
       mediaRecorder.onerror = (event) => {
         console.error("MediaRecorder error:", event);
-        setError("An error occurred while recording. Please try again.");
+        if (event.error && event.error.name) {
+          setError(`An error occurred while recording: ${event.error.name}`);
+        } else {
+          setError("An error occurred while recording. Please try again.");
+        }
         stopRecording();
       };
 
@@ -172,7 +165,17 @@ export default function VoiceRecorder({
       };
 
       // Set a shorter timeslice for mobile devices to capture data more frequently
-      const timeslice = isMobile ? 1000 : 10000; // 1 second for mobile, 10 seconds for desktop
+      const timeslice = isMobile ? 2000 : 10000; // 2 seconds for mobile
+
+      // Resume AudioContext on user gesture
+      const AudioContextConstructor = window.AudioContext;
+      if (AudioContextConstructor) {
+        const audioContext = new AudioContextConstructor();
+        if (audioContext.state === "suspended") {
+          await audioContext.resume();
+          console.log("AudioContext resumed on user gesture");
+        }
+      }
 
       mediaRecorder.start(timeslice);
       setIsRecording(true);
