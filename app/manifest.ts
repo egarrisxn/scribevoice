@@ -3,12 +3,12 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "ScribeVerse",
-    short_name: "SV",
+    short_name: "S.V.",
     description: "Transform your voice into notes, transcripts, lists and more with AI",
     start_url: "/",
     display: "standalone",
-    background_color: "#000000",
-    theme_color: "#000000",
+    theme_color: "#ffffff",
+    background_color: "#ffffff",
     icons: [
       {
         src: "/web-app-manifest-192x192.png",

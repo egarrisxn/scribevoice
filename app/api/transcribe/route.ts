@@ -14,10 +14,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No audio file provided" }, { status: 400 });
     }
 
-    // Log file details for debugging
     console.log("Received file:", audioFile.name, audioFile.type, audioFile.size);
 
-    // Check if file is too small (likely empty or corrupted)
+    // Checking if file is too small (likely empty or corrupted)
     if (audioFile.size < 100) {
       return NextResponse.json({ error: "Audio file is too small or empty" }, { status: 400 });
     }
@@ -28,17 +27,11 @@ export async function POST(request: Request) {
         model: "whisper-1",
       });
 
-      // try {
-      //   const response = await openai.audio.transcriptions.create({
-      //     file: audioFile,
-      //     model: "whisper-1",
-      //   });
-
       return NextResponse.json({ text: response.text });
     } catch (openaiError: any) {
       console.error("OpenAI API error:", openaiError);
 
-      // Provide more specific error messages based on OpenAI error types
+      // Providing more specific error messages based on OpenAI error types
       if (openaiError.status === 400) {
         return NextResponse.json(
           { error: "The audio file format is not supported or the file is corrupted" },
@@ -62,7 +55,7 @@ export async function POST(request: Request) {
   }
 }
 
-// Increase the maximum request body size
+// Increasing the maximum request body size
 export const config = {
   api: {
     bodyParser: {
