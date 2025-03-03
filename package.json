@@ -1,7 +1,23 @@
 {
   "name": "scribevoice",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Transform your voice into notes, transcripts, lists and more with the power of AI!",
+  "homepage": "https://scribevoice.vercel.app",
+  "author": "Ethan G. (https://egxo.dev)",
+  "license": "MIT",
   "private": true,
+  "keywords": [
+    "typesctipt",
+    "javascript",
+    "nextjs",
+    "next15",
+    "react",
+    "tailwindcss",
+    "shadcnui",
+    "openai",
+    "ai",
+    "vercel"
+  ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prebuild": "pnpm run lint",
