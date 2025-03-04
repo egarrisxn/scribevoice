@@ -3,35 +3,20 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
-import { Loader2 } from "lucide-react";
 import { processTranscription } from "@/lib/openai";
 import { saveTranscription } from "@/lib/storage";
-import { OutputFormatSelector, OutputFormat } from "@/components/output-format-selector";
+import { FormatSelector, OutputFormat } from "@/components/format-selector";
 import VoiceRecorder from "@/components/voice-recorder";
 import TranscriptionOutput from "@/components/transcription-output";
+import Loader from "@/components/loader";
 import SavedTranscriptions from "@/components/saved-transcriptions";
 
-export default function Landing() {
+export default function MainContent() {
   const [rawTranscription, setRawTranscription] = useState("");
   const [processedOutput, setProcessedOutput] = useState("");
   const [outputFormat, setOutputFormat] = useState<OutputFormat>("notes");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     if (rawTranscription) {
@@ -97,39 +82,20 @@ export default function Landing() {
 
   return (
     <div className="container mx-auto w-full max-w-lg space-y-16 px-4 py-8 sm:max-w-screen-sm sm:space-y-24 md:max-w-screen-md">
-      <section>
-        <h2 className="pb-4 text-center text-3xl font-bold md:text-4xl">
-          {isMobile ? "Upload Audio" : "Record or Upload"}
-        </h2>
-        <VoiceRecorder onTranscriptionComplete={handleTranscriptionComplete} />
-      </section>
-
-      <section>
-        <h2 className="pb-4 text-center text-3xl font-bold md:text-4xl">Select Your Format</h2>
-        <OutputFormatSelector onFormatChange={handleFormatChange} />
-      </section>
-
+      <VoiceRecorder onTranscriptionComplete={handleTranscriptionComplete} />
+      <FormatSelector onFormatChange={handleFormatChange} />
       {isProcessing ? (
-        <section className="flex items-center justify-center">
-          <Loader2 className="text-primary size-8 animate-spin" />
-          <span className="ml-2 text-lg">Processing your transcription...</span>
-        </section>
+        <Loader text={"Processing your transcription..."} />
       ) : rawTranscription ? (
-        <section>
-          <h2 className="pb-4 text-center text-3xl font-bold sm:text-4xl">See the Results</h2>
-          <TranscriptionOutput
-            rawTranscription={rawTranscription}
-            processedOutput={processedOutput}
-            outputFormat={outputFormat}
-            onSave={handleSaveTranscription}
-            isSaved={isSaved}
-          />
-        </section>
+        <TranscriptionOutput
+          rawTranscription={rawTranscription}
+          processedOutput={processedOutput}
+          outputFormat={outputFormat}
+          onSave={handleSaveTranscription}
+          isSaved={isSaved}
+        />
       ) : null}
-
-      <section>
-        <SavedTranscriptions />
-      </section>
+      <SavedTranscriptions />
     </div>
   );
 }

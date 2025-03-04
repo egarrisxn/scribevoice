@@ -24,25 +24,19 @@ export default function VoiceRecorder({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    handleResize();
+    // Detect if user is on mobile
+    const userAgent = navigator.userAgent || navigator.vendor;
+    const isMobileDevice = /android|iphone|ipad|ipod/i.test(userAgent.toLowerCase());
+    setIsMobile(isMobileDevice);
 
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
+    // Check if MediaRecorder API is supported
     const isMediaDevicesSupported = !!(
       navigator.mediaDevices && navigator.mediaDevices.getUserMedia
     );
     const isMediaRecorderSupported = typeof MediaRecorder !== "undefined";
-    setIsMediaRecorderSupported(isMediaDevicesSupported && isMediaRecorderSupported);
-
+    setIsMediaRecorderSupported(
+      isMediaDevicesSupported && isMediaRecorderSupported && !isMobileDevice,
+    );
     return () => {
       if (mediaRecorderRef.current && isRecording) {
         try {
@@ -95,7 +89,6 @@ export default function VoiceRecorder({
       });
 
       const mimeType = getMimeType();
-      console.log("Mime Type that was selected:", mimeType);
 
       const options = { mimeType };
       let mediaRecorder;
@@ -269,114 +262,119 @@ export default function VoiceRecorder({
   };
 
   return (
-    <Card className="from-background via-background to-accent/40 w-full space-y-2 bg-gradient-to-t py-10">
-      <CardContent>
-        <div className="flex flex-col items-center space-y-4">
-          <div className="mb-2 text-center font-semibold lg:text-lg">
-            {isRecording ? (
-              <p className="animate-pulse text-red-500">Recording in progress</p>
-            ) : isProcessing ? (
-              <p className="text-blue-500">Processing audio...</p>
-            ) : (
-              <p> {isMobile ? "" : "Ready to record"}</p>
+    <section>
+      <h2 className="pb-4 text-center text-3xl font-bold md:text-4xl">
+        {isMobile ? "Upload Audio" : "Record or Upload"}
+      </h2>
+      <Card className="from-background via-background to-accent/40 w-full space-y-2 bg-gradient-to-t py-10">
+        <CardContent>
+          <div className="flex flex-col items-center space-y-4">
+            <div className="mb-2 text-center font-semibold lg:text-lg">
+              {isRecording ? (
+                <p className="animate-pulse text-red-500">Recording in progress</p>
+              ) : isProcessing ? (
+                <p className="text-blue-500">Processing audio...</p>
+              ) : (
+                <p> {isMobile ? "" : "Ready to record"}</p>
+              )}
+            </div>
+
+            {error && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertCircle className="size-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
             )}
+
+            {isMobile && (
+              <Alert className="mb-4">
+                <AlertCircle className="size-4" />
+                <AlertTitle>Mobile Device Detected</AlertTitle>
+                <AlertDescription>
+                  Voice recording is only available on desktop browsers. Please use the file upload
+                  option instead.
+                </AlertDescription>
+              </Alert>
+            )}
+
+            <div className="flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
+              {!isRecording && !isProcessing ? (
+                <>
+                  {isMediaRecorderSupported && !isMobile && (
+                    <Button
+                      onClick={startRecording}
+                      size="lg"
+                      className="w-full cursor-pointer bg-green-600 text-white hover:bg-green-600/90 sm:w-auto"
+                    >
+                      <Mic className="size-4.5" />
+                      Start Recording
+                    </Button>
+                  )}
+
+                  <div className="flex w-full items-center sm:w-auto">
+                    <Input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="audio/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      id="audio-upload"
+                    />
+                    <Button
+                      onClick={() => fileInputRef.current?.click()}
+                      variant={isMobile ? "default" : "outline"}
+                      size="lg"
+                      className="w-full cursor-pointer sm:w-auto"
+                    >
+                      <Upload className="mr-1 size-4" />
+                      Upload Audio
+                    </Button>
+                  </div>
+                </>
+              ) : isRecording ? (
+                <Button
+                  onClick={stopRecording}
+                  size="lg"
+                  variant="outline"
+                  className="text-destructive cursor-pointer"
+                >
+                  <Square className="mr-1 size-4" />
+                  Stop Recording
+                </Button>
+              ) : (
+                <Button disabled size="lg">
+                  <Loader2 className="mr-1 size-4 animate-spin" />
+                  Processing...
+                </Button>
+              )}
+            </div>
           </div>
-
-          {error && (
-            <Alert variant="destructive" className="mb-4">
-              <AlertCircle className="size-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          {isMobile && (
-            <Alert className="mb-4">
-              <AlertCircle className="size-4" />
-              <AlertTitle>Mobile Device Detected</AlertTitle>
-              <AlertDescription>
-                Voice recording is only available on desktop browsers. Please use the file upload
-                option instead.
-              </AlertDescription>
-            </Alert>
-          )}
-
-          <div className="flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
-            {!isRecording && !isProcessing ? (
+        </CardContent>
+        <CardFooter className="text-muted-foreground mx-auto max-w-[30rem] text-center text-xs lg:text-sm">
+          <p>
+            {isMobile ? (
               <>
-                {isMediaRecorderSupported && !isMobile && (
-                  <Button
-                    onClick={startRecording}
-                    size="lg"
-                    className="w-full cursor-pointer bg-green-600 text-white hover:bg-green-600/90 sm:w-auto"
-                  >
-                    <Mic className="size-4.5" />
-                    Start Recording
-                  </Button>
-                )}
-
-                <div className="flex w-full items-center sm:w-auto">
-                  <Input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="audio/*"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                    id="audio-upload"
-                  />
-                  <Button
-                    onClick={() => fileInputRef.current?.click()}
-                    variant={isMobile ? "default" : "outline"}
-                    size="lg"
-                    className="w-full cursor-pointer sm:w-auto"
-                  >
-                    <Upload className="mr-1 size-4" />
-                    Upload Audio
-                  </Button>
-                </div>
+                Upload an audio file from your device to transcribe it. Supported formats include
+                MP3, WAV, OGG, M4A, and more.
               </>
-            ) : isRecording ? (
-              <Button
-                onClick={stopRecording}
-                size="lg"
-                variant="outline"
-                className="text-destructive cursor-pointer"
-              >
-                <Square className="mr-1 size-4" />
-                Stop Recording
-              </Button>
+            ) : isMediaRecorderSupported ? (
+              <>
+                Click the record button to start recording. Speak clearly into your microphone. When
+                finished, click stop to process your recording.
+                <br />
+                <br />
+                Alternatively, you can upload an existing audio file.
+              </>
             ) : (
-              <Button disabled size="lg">
-                <Loader2 className="mr-1 size-4 animate-spin" />
-                Processing...
-              </Button>
+              <>
+                Your browser doesn&apos;t support direct audio recording. Please upload an audio
+                file instead or try using a different browser like Chrome or Firefox.
+              </>
             )}
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter className="text-muted-foreground mx-auto max-w-[30rem] text-center text-xs lg:text-sm">
-        <p>
-          {isMobile ? (
-            <>
-              Upload an audio file from your device to transcribe it. Supported formats include MP3,
-              WAV, OGG, M4A, and more.
-            </>
-          ) : isMediaRecorderSupported ? (
-            <>
-              Click the record button to start recording. Speak clearly into your microphone. When
-              finished, click stop to process your recording.
-              <br />
-              <br />
-              Alternatively, you can upload an existing audio file.
-            </>
-          ) : (
-            <>
-              Your browser doesn&apos;t support direct audio recording. Please upload an audio file
-              instead or try using a different browser like Chrome or Firefox.
-            </>
-          )}
-        </p>
-      </CardFooter>
-    </Card>
+          </p>
+        </CardFooter>
+      </Card>
+    </section>
   );
 }

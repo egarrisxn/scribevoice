@@ -86,7 +86,7 @@ export default function SavedTranscriptions() {
   }
 
   return (
-    <>
+    <section>
       <h2 className="pb-4 text-center text-3xl font-bold md:text-4xl">Save Locally</h2>
       <Collapsible
         open={isOpen}
@@ -131,7 +131,14 @@ export default function SavedTranscriptions() {
         </div>
 
         <CollapsibleContent>
-          <ScrollArea className="h-[400px] px-2 pt-3">
+          <ScrollArea className="h-[400px] p-2">
+            <div className="text-muted-foreground mx-auto flex max-w-[30rem] items-center px-6 pb-6 text-center text-xs md:pb-4 lg:text-sm">
+              <p>
+                <span className="text-foreground font-bold">Note: </span> Transcriptions are saved
+                locally to your browser. To avoid issues, we recommended saving transcriptions to
+                your local device.
+              </p>
+            </div>
             <div className="space-y-4">
               {transcriptions.map((transcription) => (
                 <Card
@@ -236,6 +243,6 @@ export default function SavedTranscriptions() {
           </ScrollArea>
         </CollapsibleContent>
       </Collapsible>
-    </>
+    </section>
   );
 }
