@@ -6,7 +6,7 @@
 
 ## **Overview**
 
-ScribeVoice let's you transform your voice into notes, transcripts, lists and more with AI. Powered by OpeanAI, it uses the latest model to give you the best possiible output!
+ScribeVoice let's you transform your voice into notes, transcripts, lists and more with AI. Powered by OpeanAI, it uses the latest model to give you the best possible output!
 
 ## **Technologies**
 
