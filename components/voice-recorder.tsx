@@ -24,12 +24,10 @@ export default function VoiceRecorder({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // Detect if user is on mobile
     const userAgent = navigator.userAgent || navigator.vendor;
     const isMobileDevice = /android|iphone|ipad|ipod/i.test(userAgent.toLowerCase());
     setIsMobile(isMobileDevice);
 
-    // Check if MediaRecorder API is supported
     const isMediaDevicesSupported = !!(
       navigator.mediaDevices && navigator.mediaDevices.getUserMedia
     );

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers";
+import { siteConfig } from "@/utils/config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,12 +17,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://scribevoice.vercel.app"),
-  title: "ScribeVoice | AI Voice Transcription",
-  description: "Transform your voice into notes, transcripts, lists and more with AI",
-  applicationName: "ScribeVoice",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  creator: siteConfig.links.website,
   referrer: "origin-when-cross-origin",
-  creator: "https://egxo.dev",
   keywords: [
     "typesctipt",
     "javascript",
@@ -35,25 +39,25 @@ export const metadata: Metadata = {
     "vercel",
   ],
   openGraph: {
-    title: "ScribeVoice",
-    description: "Transform your voice into notes, transcripts, lists and more with AI",
-    url: "https://scribevoice.vercel.app",
-    siteName: "ScribeVoice",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ScribeVoice",
-    description: "Transform your voice into notes, transcripts, lists and more with AI",
-    creator: "@eg__xo",
-    site: "@eg__xo",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    creator: siteConfig.socialHandle,
+    site: siteConfig.socialHandle,
   },
   appleWebApp: {
     capable: true,
-    title: "ScribeVoice",
-    startupImage: "https://scribevoice.vercel.app/opengraph-image.png",
-    statusBarStyle: "black-translucent",
+    title: siteConfig.name,
+    startupImage: siteConfig.ogImage,
+    statusBarStyle: "default",
   },
   formatDetection: {
     telephone: true,

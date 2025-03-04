@@ -1,13 +1,16 @@
 import type { MetadataRoute } from "next";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticPages: MetadataRoute.Sitemap = [
+  return [
     {
-      url: "https://scribevoice.vercel.app",
+      url: `${siteUrl}`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
+    },
+    {
+      url: `${siteUrl}/login`,
+      lastModified: new Date(),
     },
   ];
-  return staticPages;
 }

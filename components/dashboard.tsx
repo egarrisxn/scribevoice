@@ -11,7 +11,7 @@ import TranscriptionOutput from "@/components/transcription-output";
 import Loader from "@/components/loader";
 import SavedTranscriptions from "@/components/saved-transcriptions";
 
-export default function MainContent() {
+export default function Dashbaord() {
   const [rawTranscription, setRawTranscription] = useState("");
   const [processedOutput, setProcessedOutput] = useState("");
   const [outputFormat, setOutputFormat] = useState<OutputFormat>("notes");
@@ -81,21 +81,23 @@ export default function MainContent() {
   };
 
   return (
-    <div className="container mx-auto w-full max-w-lg space-y-16 px-4 py-8 sm:max-w-screen-sm sm:space-y-24 md:max-w-screen-md">
-      <VoiceRecorder onTranscriptionComplete={handleTranscriptionComplete} />
-      <FormatSelector onFormatChange={handleFormatChange} />
-      {isProcessing ? (
-        <Loader text={"Processing your transcription..."} />
-      ) : rawTranscription ? (
-        <TranscriptionOutput
-          rawTranscription={rawTranscription}
-          processedOutput={processedOutput}
-          outputFormat={outputFormat}
-          onSave={handleSaveTranscription}
-          isSaved={isSaved}
-        />
-      ) : null}
-      <SavedTranscriptions />
-    </div>
+    <section className="from-foreground/5 via-background to-background grid min-h-screen w-full place-items-center bg-gradient-to-b p-4 sm:p-6 lg:p-0">
+      <div className="container mx-auto w-full max-w-lg space-y-16 px-4 py-8 sm:max-w-screen-sm sm:space-y-24 md:max-w-screen-md">
+        <VoiceRecorder onTranscriptionComplete={handleTranscriptionComplete} />
+        <FormatSelector onFormatChange={handleFormatChange} />
+        {isProcessing ? (
+          <Loader text={"Processing your transcription..."} />
+        ) : rawTranscription ? (
+          <TranscriptionOutput
+            rawTranscription={rawTranscription}
+            processedOutput={processedOutput}
+            outputFormat={outputFormat}
+            onSave={handleSaveTranscription}
+            isSaved={isSaved}
+          />
+        ) : null}
+        <SavedTranscriptions />
+      </div>
+    </section>
   );
 }
