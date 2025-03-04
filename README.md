@@ -82,10 +82,6 @@ Once the server is running, open [http://localhost:3000](http://localhost:3000) 
 
 You can start editing the page by modifying `app/page.tsx`. TThe page will auto-update as you edit the file. Now, get to building! 🚀
 
-## **Configuration**
-
-Easily customize your project by updating `utils/config.ts`. This file centralizes important settings, allowing for quick adjustments without modifying multiple files.
-
 ## **Styling**
 
 This project utilizes [shadcn/ui](https://ui.shadcn.com/) alongside [Tailwind CSS v4](https://tailwindcss.com/blog/tailwindcss-v4).
