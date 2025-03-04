@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![GitHub repo size](https://img.shields.io/github/repo-size/egarrisxn/scribevoice) ![GitHub last commit](https://img.shields.io/github/last-commit/egarrisxn/scribevoice)
 
+![sv](https://github.com/user-attachments/assets/107315f6-0f1b-47c4-9800-c720f8691447)
+
 ## **Overview**
 
 ScribeVoice let's you transform your voice into notes, transcripts, lists and more with AI. Powered by OpeanAI, it uses the latest model to give you the best possiible output!
