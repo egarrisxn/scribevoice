@@ -22,17 +22,17 @@ export default function ThemeToggle() {
       variant="outline"
       type="single"
       size="sm"
-      className="text-sm" // sm:*:data-[slot=toggle-group-item]:w-22
+      className="text-sm"
       value={theme || resolvedTheme}
       onValueChange={(value) => value && setTheme(value)}
     >
-      <ToggleGroupItem value="system" aria-label="Toggle system theme">
+      <ToggleGroupItem value="system" aria-label="Toggle system theme" className="cursor-pointer">
         <Computer className="size-4" />
       </ToggleGroupItem>
-      <ToggleGroupItem value="light" aria-label="Toggle light theme">
+      <ToggleGroupItem value="light" aria-label="Toggle light theme" className="cursor-pointer">
         <Sun className="size-4" />
       </ToggleGroupItem>
-      <ToggleGroupItem value="dark" aria-label="Toggle dark theme">
+      <ToggleGroupItem value="dark" aria-label="Toggle dark theme" className="cursor-pointer">
         <Moon className="size-4" />
       </ToggleGroupItem>
     </ToggleGroup>

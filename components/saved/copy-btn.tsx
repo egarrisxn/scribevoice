@@ -21,13 +21,11 @@ export function CopyTranscription({ text, id }: CopyButtonProps) {
     <Button variant="outline" size="sm" className="mr-2 cursor-pointer" onClick={copyToClipboard}>
       {copied === id ? (
         <>
-          <Check className="mr-1 size-4" />
-          Copied
+          <Check className="mr-1 size-4" /> Copied
         </>
       ) : (
         <>
-          <Copy className="mr-1 size-4" />
-          Copy
+          <Copy className="mr-1 size-4" /> Copy
         </>
       )}
     </Button>

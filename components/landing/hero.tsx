@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function Hero() {
   return (
-    <section className="from-foreground/10 via-background to-background grid w-full place-content-center place-items-center gap-5 bg-gradient-to-br px-4 py-24 text-center sm:px-6 sm:pt-44 sm:pb-36">
+    <section className="grid w-full place-items-center gap-5 px-4 py-24 text-center sm:px-6 sm:pt-40 sm:pb-36">
       <Badge variant="fun">Use Your Voice!</Badge>
       <h1 className="text-[4rem] leading-none font-bold tracking-tighter sm:text-[6.5rem]">
         ScribeVoice

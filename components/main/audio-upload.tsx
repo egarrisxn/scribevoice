@@ -2,12 +2,12 @@ import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-interface Props {
+interface AudioProps {
   fileInputRef: React.RefObject<HTMLInputElement>;
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function AudioUpload({ fileInputRef, handleFileUpload }: Props) {
+export default function AudioUpload({ fileInputRef, handleFileUpload }: AudioProps) {
   return (
     <div className="flex w-full items-center sm:w-auto">
       <Input

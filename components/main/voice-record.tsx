@@ -1,7 +1,7 @@
 import { Mic, Square, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-interface Props {
+interface VoiceProps {
   isRecording: boolean;
   isProcessing: boolean;
   startRecording: () => void;
@@ -13,14 +13,13 @@ export default function VoiceUpload({
   isProcessing,
   startRecording,
   stopRecording,
-}: Props) {
+}: VoiceProps) {
   if (isProcessing)
     return (
       <Button disabled size="lg">
         <Loader2 className="mr-1 size-4 animate-spin" /> Processing...
       </Button>
     );
-
   return isRecording ? (
     <div className="flex flex-col items-center">
       <Button

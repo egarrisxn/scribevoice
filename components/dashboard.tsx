@@ -4,12 +4,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { saveTranscription } from "@/app/actions";
 import { processTranscription } from "@/lib/openai";
-import { Card } from "@/components/ui/card";
-import RecordCard from "@/components/record/record-card";
-import { type OutputFormat, FormatSelector } from "@/components/output/output-selector";
-import TranscriptionOutput from "@/components/output/output-card";
-import Loader from "@/components/shared/loader";
-import SavedTranscriptions from "@/components/saved/saved-list";
+import { type OutputFormat } from "@/components/main/format-selector";
+import MainCard from "@/components/main/main-card";
+import SavedTranscriptionsList from "@/components/saved/transcriptions-list";
 
 export default function Dashbaord() {
   const [rawTranscription, setRawTranscription] = useState("");
@@ -54,24 +51,17 @@ export default function Dashbaord() {
   };
 
   return (
-    <section className="from-foreground/5 via-background to-background w-full bg-gradient-to-b py-20 lg:py-40">
+    <section className="w-full py-14 lg:py-28">
       <div className="container mx-auto min-h-screen w-full max-w-lg space-y-16 px-4 sm:max-w-screen-sm sm:space-y-24 md:max-w-screen-md">
-        <Card className="w-full space-y-8 py-10">
-          <RecordCard onTranscriptionComplete={handleTranscriptionComplete} />
-          <hr />
-          <FormatSelector onFormatChange={handleFormatChange} />
-        </Card>
-
-        {isProcessing ? (
-          <Loader text={"Processing your transcription..."} />
-        ) : rawTranscription ? (
-          <TranscriptionOutput
-            rawTranscription={rawTranscription}
-            processedOutput={processedOutput}
-            outputFormat={outputFormat}
-          />
-        ) : null}
-        <SavedTranscriptions />
+        <MainCard
+          onTranscriptionComplete={handleTranscriptionComplete}
+          rawTranscription={rawTranscription}
+          processedOutput={processedOutput}
+          outputFormat={outputFormat}
+          isProcessing={isProcessing}
+          handleFormatChange={handleFormatChange}
+        />
+        <SavedTranscriptionsList />
       </div>
     </section>
   );

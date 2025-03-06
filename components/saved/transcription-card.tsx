@@ -24,14 +24,14 @@ interface TranscriptionCardProps {
 
 export function TranscriptionCard({ transcription }: TranscriptionCardProps) {
   return (
-    <Card className="from-background via-background to-accent/40 overflow-hidden rounded bg-gradient-to-t">
+    <Card className="from-background via-background to-accent/40 overflow-hidden rounded bg-gradient-to-t shadow">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div>
-            <CardTitle className="text-base">
+            <CardTitle className="text-base font-semibold">
               {transcription.transcription_text.substring(0, 20) + "..."}
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-sm">
               {formatDistanceToNow(new Date(transcription.created_at), { addSuffix: true })}
             </CardDescription>
           </div>
@@ -43,7 +43,7 @@ export function TranscriptionCard({ transcription }: TranscriptionCardProps) {
           {transcription.transcription_text}
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end pt-2 pb-3">
+      <CardFooter className="flex justify-center sm:justify-end sm:pt-1 sm:pb-3">
         <CopyTranscription text={transcription.transcription_text} id={transcription.id} />
         <DownloadTranscription transcription={transcription} />
       </CardFooter>

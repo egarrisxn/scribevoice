@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
+import MainFooter from "@/components/shared/footer";
 import Dashboard from "@/components/dashboard";
-import Footer from "@/components/shared/footer";
-
-import Navbar from "@/components/shared/navbar";
+import MainNavbar from "@/components/shared/navbar";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -12,9 +11,9 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="mx-auto flex w-full flex-col">
-      <Navbar />
+      <MainNavbar />
       <Dashboard />
-      <Footer />
+      <MainFooter />
     </div>
   );
 }
