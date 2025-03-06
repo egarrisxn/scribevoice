@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AuthNav from "@/components/auth-nav";
+import AuthNav from "@/components/auth/auth-nav";
 
 export default function AuthError() {
   return (

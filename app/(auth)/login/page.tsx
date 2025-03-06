@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import AuthNav from "@/components/auth-nav";
-import LoginCard from "@/components/login-card";
+import AuthNav from "@/components/auth/auth-nav";
+import LoginCard from "@/components/auth/login-card";
 
 export const metadata: Metadata = {
   title: "Login | ScribeVoice",

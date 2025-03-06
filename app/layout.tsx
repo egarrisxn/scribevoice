@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster as SonnerToaster } from "sonner";
 import { ThemeProvider } from "@/components/providers";
-import { siteConfig } from "@/utils/config";
+import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -89,7 +89,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           disableTransitionOnChange
         >
           {children}
-          <Toaster />
+          <SonnerToaster richColors closeButton position="bottom-right" />
         </ThemeProvider>
       </body>
     </html>

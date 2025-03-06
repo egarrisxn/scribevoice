@@ -3,10 +3,16 @@
 import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardFooter } from "./ui/card";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const formats = [
   {
@@ -42,13 +48,12 @@ export function FormatSelector({
   const [value, setValue] = useState<OutputFormat>("notes");
 
   return (
-    <section>
-      <h2 className="pb-4 text-center text-3xl font-bold md:text-4xl">Select Your Format</h2>
-      <Card className="from-background via-background to-accent/40 w-full space-y-2 bg-gradient-to-t py-10">
+    <>
+      <Card className="w-full space-y-2 rounded-none border-none py-4 shadow-none">
+        <CardHeader>
+          <CardTitle className="text-center font-semibold lg:text-lg">Select Your Format</CardTitle>
+        </CardHeader>
         <CardContent>
-          <div className="mb-2 text-center font-semibold lg:text-lg">
-            <p>Output Format</p>
-          </div>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -104,6 +109,6 @@ export function FormatSelector({
           </p>
         </CardFooter>
       </Card>
-    </section>
+    </>
   );
 }

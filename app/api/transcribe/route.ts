@@ -31,7 +31,6 @@ export async function POST(request: Request) {
     } catch (openaiError: any) {
       console.error("OpenAI API error:", openaiError);
 
-      // Providing more specific error messages based on OpenAI error types
       if (openaiError.status === 400) {
         return NextResponse.json(
           { error: "The audio file format is not supported or the file is corrupted" },

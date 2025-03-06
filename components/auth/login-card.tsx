@@ -6,8 +6,8 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import GitHubAuth from "@/components/github-auth";
-import GoogleAuth from "@/components/google-auth";
+import GitHubAuth from "@/components/auth/github-auth";
+import GoogleAuth from "@/components/auth/google-auth";
 
 export default function LoginCard() {
   return (

@@ -1,4 +1,5 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
@@ -37,5 +38,35 @@ export async function authWithGoogle() {
   if (error) throw new Error(`Error signing in: ${error.message}`);
   if (data.url) {
     redirect(data.url);
+  }
+}
+
+export async function saveTranscription(transcription: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+  if (userError) throw userError;
+  if (!user) throw new Error("User not authenticated");
+
+  const { error } = await supabase.from("transcriptions").insert({
+    user_id: user.id,
+    transcription_text: transcription,
+  });
+  if (error) throw error;
+  revalidatePath("/dashboard");
+}
+
+export async function deleteTranscription(id: string) {
+  try {
+    const supabase = await createClient();
+    const { error } = await supabase.from("transcriptions").delete().eq("id", id);
+    if (error) {
+      throw new Error("Failed to delete transcription.");
+    }
+    revalidatePath("/dashboard");
+  } catch (error) {
+    throw new Error("Failed to delete transcription.");
   }
 }
