@@ -67,7 +67,6 @@ export const metadata: Metadata = {
     email: true,
     url: true,
   },
-  appLinks: {},
 };
 
 export const viewport: Viewport = {

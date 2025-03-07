@@ -1,5 +1,5 @@
-import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 
 const authRoutes = ["/login", "/auth-error"];
 const secureRoutes = ["/dashboard"];

@@ -1,3 +1,5 @@
+import { siteUrl } from "@/lib/env";
+
 export interface SiteConfig {
   name: string;
   description: string;
@@ -12,11 +14,9 @@ export interface SiteConfig {
   };
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
-
 export const siteConfig: SiteConfig = {
   name: "ScribeVoice",
-  description: "Transform your voice into notes, transcripts, lists and more with AI.",
+  description: "Transform your voice into notes, transcripts, lists and more with the power of AI!",
   url: siteUrl,
   ogImage: `${siteUrl}/opengraph-image.png`,
   twitterImage: `${siteUrl}/twitter-image.png`,

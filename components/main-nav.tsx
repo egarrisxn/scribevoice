@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions";
 import Logo from "@/components/logo";
 import ThemeToggle from "@/components/theme-toggle";

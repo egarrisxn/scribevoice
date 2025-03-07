@@ -2,9 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createClient } from "@/utils/supabase/server";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
+import { createClient } from "@/lib/supabase/server";
+import { siteUrl } from "@/lib/env";
 
 export async function signOut() {
   const supabase = await createClient();

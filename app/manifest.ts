@@ -6,7 +6,12 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "S.V.",
     description:
       "Transform your voice into notes, transcripts, lists and more with the power of AI!",
+    id: "/",
     start_url: "/",
+    theme_color: "#000000",
+    background_color: "#000000",
+    orientation: "any",
+    display: "standalone",
     icons: [
       {
         src: "/icons/icon-192.png",
@@ -46,8 +51,5 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
     ],
-    theme_color: "#000000",
-    background_color: "#000000",
-    display: "standalone",
   };
 }

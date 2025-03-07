@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 import { transcribeAudio } from "@/lib/openai";
-import { getMimeType, createAudioBlob } from "@/utils/helpers";
+import { getMimeType, createAudioBlob } from "@/lib/helpers";
 
 export function useRecorder(onTranscriptionComplete: (text: string) => void) {
   const [isRecording, setIsRecording] = useState(false);
