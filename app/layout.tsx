@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import { ReactNode } from "react";
 import { Toaster as SonnerToaster } from "sonner";
 import { ThemeProvider } from "@/components/providers";
 import { siteConfig } from "@/lib/config";
@@ -58,7 +57,7 @@ export const metadata: Metadata = {
     capable: true,
     title: siteConfig.name,
     startupImage: siteConfig.ogImage,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
   },
   formatDetection: {
     telephone: true,
@@ -78,7 +77,7 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
