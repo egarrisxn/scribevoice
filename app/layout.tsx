@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { ReactNode } from "react";
 import { Toaster as SonnerToaster } from "sonner";
 import { ThemeProvider } from "@/components/providers";
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
           <SonnerToaster richColors closeButton position="bottom-right" />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
