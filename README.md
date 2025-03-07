@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![GitHub repo size](https://img.shields.io/github/repo-size/egarrisxn/scribevoice) ![GitHub last commit](https://img.shields.io/github/last-commit/egarrisxn/scribevoice)
 
-![sv](https://github.com/user-attachments/assets/107315f6-0f1b-47c4-9800-c720f8691447)
+![og](https://github.com/user-attachments/assets/55e48dab-4356-420a-92ce-2dfa52b7a549)
 
 ## **Overview**
 
