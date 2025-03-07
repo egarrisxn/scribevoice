@@ -12,7 +12,7 @@ interface DownloadButtonProps {
   transcription: Transcription;
 }
 
-export function DownloadTranscription({ transcription }: DownloadButtonProps) {
+export function DownloadButton({ transcription }: DownloadButtonProps) {
   const downloadTranscription = () => {
     const blob = new Blob([transcription.transcription_text], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -28,7 +28,7 @@ export function DownloadTranscription({ transcription }: DownloadButtonProps) {
   return (
     <Button variant="outline" size="sm" className="cursor-pointer" onClick={downloadTranscription}>
       <Download className="mr-1 size-4" />
-      Download
+      <span>Download</span>
     </Button>
   );
 }

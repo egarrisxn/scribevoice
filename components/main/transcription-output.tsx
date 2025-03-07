@@ -40,7 +40,7 @@ export default function TranscriptionOutput({
 
   return (
     <div className="w-full space-y-2 px-4 py-2">
-      <div className="text-center font-semibold lg:text-lg">Transcription Results</div>
+      <h1 className="text-center font-semibold lg:text-lg">Transcription Results</h1>
       <div className="mt-4">
         <Tabs defaultValue="processed">
           <TabsList className="grid w-full grid-cols-2">

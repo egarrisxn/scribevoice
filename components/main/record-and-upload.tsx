@@ -5,8 +5,8 @@ import { AlertCircle } from "lucide-react";
 import { useRecorder } from "@/hooks/useRecorder";
 import { useFileUpload } from "@/hooks/useFileUpload";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import VoiceRecord from "@/components/main/voice-record";
-import AudioUpload from "@/components/main/audio-upload";
+import RecordButton from "@/components/main/record-btn";
+import UploadButton from "@/components/main/upload-btn";
 
 export default function RecordAndUpload({
   onTranscriptionComplete,
@@ -24,10 +24,10 @@ export default function RecordAndUpload({
   }, []);
 
   return (
-    <div className="space-y-2 py-2 dark:bg-zinc-900">
-      <div className="text-center font-semibold lg:text-lg">
+    <div className="space-y-2 py-2">
+      <h1 className="text-center font-semibold lg:text-lg">
         {isMobile ? "Upload Audio File" : "Record or Upload Audio"}
-      </div>
+      </h1>
       <div className="flex flex-col items-center gap-0.5">
         {recorder.error && (
           <Alert variant="destructive" className="mb-4">
@@ -47,34 +47,30 @@ export default function RecordAndUpload({
           </Alert>
         )}
         <div className="flex flex-col gap-4 lg:flex-row">
-          <VoiceRecord {...recorder} />
-          <AudioUpload {...fileUpload} />
+          <RecordButton {...recorder} />
+          <UploadButton {...fileUpload} />
         </div>
       </div>
-      <div className="text-muted-foreground mx-auto max-w-[30rem] pt-4 text-center text-xs lg:text-sm">
-        <p>
-          {isMobile ? (
-            <>
-              Upload an audio file from your device for transcription. Supported formats include
-              MP3, WAV, OGG, M4A, and more.
-            </>
-          ) : recorder.isMediaRecorderSupported ? (
-            <>
-              Initiate recording by clicking the record button. Speak clearly into the microphone.
-              Terminate recording to process your audio.
-              <br />
-              <span className="font-semibold">
-                Alternatively, upload a pre-recorded audio file.
-              </span>
-            </>
-          ) : (
-            <>
-              Direct audio recording is not supported by your current browser. Please upload an
-              audio file or consider using a compatible browser such as Chrome or Firefox.
-            </>
-          )}
-        </p>
-      </div>
+      <p className="text-muted-foreground mx-auto max-w-[30rem] pt-4 text-center text-xs lg:text-sm">
+        {isMobile ? (
+          <>
+            Upload an audio file from your device for transcription. Supported formats include MP3,
+            WAV, OGG, M4A, and more.
+          </>
+        ) : recorder.isMediaRecorderSupported ? (
+          <>
+            Initiate recording by clicking the record button. Speak clearly into the microphone.
+            Terminate recording to process your audio.
+            <br />
+            <span className="font-semibold">Alternatively, upload a pre-recorded audio file.</span>
+          </>
+        ) : (
+          <>
+            Direct audio recording is not supported by your current browser. Please upload an audio
+            file or consider using a compatible browser such as Chrome or Firefox.
+          </>
+        )}
+      </p>
     </div>
   );
 }

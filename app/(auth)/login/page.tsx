@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import AuthNav from "@/components/auth/auth-nav";
-import LoginCard from "@/components/auth/login-card";
+import AuthNav from "@/components/auth-nav";
+import LoginCard from "@/components/login-card";
 
 export const metadata: Metadata = {
   title: "Login | ScribeVoice",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Login() {
   return (
-    <section className="from-foreground/5 via-background to-background grid min-h-screen w-full place-items-center bg-gradient-to-t p-4 sm:p-6 lg:p-0">
+    <section className="grid min-h-screen w-full place-items-center p-4 sm:p-6 lg:p-0">
       <AuthNav />
       <LoginCard />
     </section>

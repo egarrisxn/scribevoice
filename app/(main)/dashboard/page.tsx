@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import MainFooter from "@/components/shared/footer";
-import Dashboard from "@/components/dashboard";
-import MainNavbar from "@/components/shared/navbar";
+import MainFooter from "@/components/footer";
+import DashboardCard from "@/components/dashboard-card";
+import MainNavbar from "@/components/main-nav";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="mx-auto flex w-full flex-col">
+    <div className="grid min-h-[100dvh] w-full grid-rows-[auto_1fr_auto]">
       <MainNavbar />
-      <Dashboard />
+      <DashboardCard />
       <MainFooter />
     </div>
   );

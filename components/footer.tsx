@@ -6,7 +6,7 @@ export default function MainFooter() {
           &copy; {new Date().getFullYear()} ScribeVoice by{" "}
           <a
             href="https://egxo.dev"
-            className="text-primary font-medium underline-offset-2 hover:text-blue-500/90 hover:underline"
+            className="text-primary font-medium underline-offset-4 hover:text-blue-400 hover:underline"
           >
             egxo.dev
           </a>

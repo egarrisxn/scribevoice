@@ -7,9 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DeleteTranscription } from "@/components/saved/delete-btn";
-import { CopyTranscription } from "@/components/saved/copy-btn";
-import { DownloadTranscription } from "@/components/saved/download-btn";
+import { DeleteButton } from "@/components/saved/delete-btn";
+import { CopyButton } from "@/components/saved/copy-btn";
+import { DownloadButton } from "@/components/saved/download-btn";
 
 interface Transcription {
   id: string;
@@ -29,23 +29,25 @@ export function TranscriptionCard({ transcription }: TranscriptionCardProps) {
         <div className="flex items-start justify-between">
           <div>
             <CardTitle className="text-base font-semibold">
-              {transcription.transcription_text.substring(0, 20) + "..."}
+              <h1>{transcription.transcription_text.substring(0, 20) + "..."}</h1>
             </CardTitle>
-            <CardDescription className="text-sm">
-              {formatDistanceToNow(new Date(transcription.created_at), { addSuffix: true })}
+            <CardDescription className="mt-0.5 text-sm">
+              <h2>
+                {formatDistanceToNow(new Date(transcription.created_at), { addSuffix: true })}
+              </h2>
             </CardDescription>
           </div>
-          <DeleteTranscription id={transcription.id} />
+          <DeleteButton id={transcription.id} />
         </div>
       </CardHeader>
       <CardContent className="pb-2">
         <div className="bg-muted/50 max-h-[150px] overflow-y-auto rounded-md p-3 text-sm whitespace-pre-wrap">
-          {transcription.transcription_text}
+          <p>{transcription.transcription_text}</p>
         </div>
       </CardContent>
       <CardFooter className="flex justify-center sm:justify-end sm:pt-1 sm:pb-3">
-        <CopyTranscription text={transcription.transcription_text} id={transcription.id} />
-        <DownloadTranscription transcription={transcription} />
+        <CopyButton text={transcription.transcription_text} id={transcription.id} />
+        <DownloadButton transcription={transcription} />
       </CardFooter>
     </Card>
   );

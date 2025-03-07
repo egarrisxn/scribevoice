@@ -63,11 +63,12 @@ export default function TranscriptionsList() {
         <hr className="border-muted" />
         <div className="flex items-center justify-between py-6">
           <CollapsibleTrigger asChild>
-            <Button variant="ghost" className="flex cursor-pointer items-center gap-2">
+            <Button
+              variant="ghost"
+              className="font-semibol flex cursor-pointer items-center gap-2 text-base leading-none"
+            >
               {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
-              <h3 className="text-base leading-none font-semibold">
-                Saved Transcriptions ({transcriptions.length})
-              </h3>
+              <span>Saved Transcriptions ({transcriptions.length})</span>
             </Button>
           </CollapsibleTrigger>
         </div>

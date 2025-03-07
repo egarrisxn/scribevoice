@@ -8,7 +8,7 @@ interface VoiceProps {
   stopRecording: () => void;
 }
 
-export default function VoiceUpload({
+export default function RecordButton({
   isRecording,
   isProcessing,
   startRecording,
@@ -17,7 +17,7 @@ export default function VoiceUpload({
   if (isProcessing)
     return (
       <Button disabled size="lg">
-        <Loader2 className="mr-1 size-4 animate-spin" /> Processing...
+        <Loader2 className="mr-1 size-4 animate-spin" /> <span>Processing...</span>
       </Button>
     );
   return isRecording ? (
@@ -28,7 +28,7 @@ export default function VoiceUpload({
         variant="outline"
         className="text-destructive cursor-pointer"
       >
-        <Square className="mr-1 size-4" /> Stop Recording
+        <Square className="mr-1 size-4" /> <span>Stop Recording</span>
       </Button>
     </div>
   ) : (
@@ -37,7 +37,7 @@ export default function VoiceUpload({
       size="lg"
       className="w-full cursor-pointer bg-green-600 text-white hover:bg-green-600/90 sm:w-auto"
     >
-      <Mic className="size-4.5" /> Start Recording
+      <Mic className="size-4.5" /> <span>Start Recording</span>
     </Button>
   );
 }

@@ -48,7 +48,7 @@ export function FormatSelector({
 
   return (
     <div className="space-y-2 py-2">
-      <div className="text-center font-semibold lg:text-lg">Select Output Format</div>
+      <h1 className="text-center font-semibold lg:text-lg">Select Output Format</h1>
       <div className="space-y-2">
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -96,12 +96,10 @@ export function FormatSelector({
           </PopoverContent>
         </Popover>
       </div>
-      <div className="text-muted-foreground mx-auto max-w-[30rem] pt-4 text-center text-xs lg:text-sm">
-        <p>
-          Choose your preferred output format. You can then copy or save the results. If the output
-          is not satisfactory, please try again.
-        </p>
-      </div>
+      <p className="text-muted-foreground mx-auto max-w-[30rem] pt-4 text-center text-xs lg:text-sm">
+        Choose your preferred output format. You can then copy or save the results. If the output is
+        not satisfactory, please try again.
+      </p>
     </div>
   );
 }

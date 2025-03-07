@@ -1,11 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import { toast } from "sonner";
 import { Trash2, Loader2 } from "lucide-react";
 import { deleteTranscription } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 
-export function DeleteTranscription({ id }: { id: string }) {
+export function DeleteButton({ id }: { id: string }) {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -13,6 +14,7 @@ export function DeleteTranscription({ id }: { id: string }) {
     if (!confirmDelete) return;
 
     setLoading(true);
+
     try {
       await deleteTranscription(id);
       toast.success("Transcription deleted successfully.");
