@@ -19,6 +19,7 @@ export function DeleteButton({ id }: { id: string }) {
       await deleteTranscription(id);
       toast.success("Transcription deleted successfully.");
     } catch (error) {
+      console.log(error);
       toast.error("Failed to delete transcription.");
     } finally {
       setLoading(false);

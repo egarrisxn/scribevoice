@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AlertCircle } from "lucide-react";
-import { useRecorder } from "@/hooks/useRecorder";
-import { useFileUpload } from "@/hooks/useFileUpload";
+import { useRecorder, useFileUpload } from "@/lib/hooks";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import RecordButton from "@/components/main/record-btn";
 import UploadButton from "@/components/main/upload-btn";

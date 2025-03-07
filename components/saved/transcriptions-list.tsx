@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import FunCard from "@/components/fun-card";
 import { TranscriptionCard } from "@/components/saved/transcription-card";
 
 interface Transcription {
@@ -40,26 +40,13 @@ export default function TranscriptionsList() {
     return null;
   }
 
-  const Border = ({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) => {
-    return (
-      <div
-        {...rest}
-        className={cn("absolute size-6 border-zinc-700 dark:border-zinc-200", className)}
-      />
-    );
-  };
-
   return (
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
       className="border-accent group relative rounded-md border-2 bg-white dark:bg-zinc-900"
     >
-      <Border className="-top-0.5 -left-0.5 rounded-tl-md border-t-2 border-l-2" />
-      <Border className="-top-0.5 -right-0.5 rounded-tr-md border-t-2 border-r-2" />
-      <Border className="-bottom-0.5 -left-0.5 rounded-bl-md border-b-2 border-l-2" />
-      <Border className="-right-0.5 -bottom-0.5 rounded-br-md border-r-2 border-b-2" />
-      <div className="p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
+      <FunCard className="p-6">
         <hr className="border-muted" />
         <div className="flex items-center justify-between py-6">
           <CollapsibleTrigger asChild>
@@ -85,7 +72,7 @@ export default function TranscriptionsList() {
           </div>
           <hr className="border-muted" />
         </CollapsibleContent>
-      </div>
+      </FunCard>
     </Collapsible>
   );
 }

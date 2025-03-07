@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { signOut } from "@/app/actions";
 import Logo from "@/components/logo";
+import SignOutButton from "./signout-button";
 import ThemeToggle from "@/components/theme-toggle";
 
 export default async function MainNav() {
@@ -22,14 +22,7 @@ export default async function MainNav() {
             >
               Dashboard
             </Link>
-            <form action={signOut}>
-              <button
-                type="submit"
-                className="cursor-pointer underline-offset-4 hover:text-blue-400 hover:underline"
-              >
-                Sign Out
-              </button>
-            </form>
+            <SignOutButton />
           </div>
         ) : (
           <Link href="/login" className="underline-offset-4 hover:text-blue-400 hover:underline">

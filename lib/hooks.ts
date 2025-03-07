@@ -62,9 +62,14 @@ export function useRecorder(onTranscriptionComplete: (text: string) => void) {
       mediaRecorder.start();
       setIsRecording(true);
       toast.success("Recording started");
-    } catch (error: any) {
-      setError("Error starting recording.");
-      toast.error("Recording failed", { description: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError("Error starting recording.");
+        toast.error("Recording failed", { description: error.message });
+      } else {
+        setError("Error starting recording.");
+        toast.error("Recording failed");
+      }
     }
   };
 
@@ -91,9 +96,14 @@ export function useRecorder(onTranscriptionComplete: (text: string) => void) {
 
       onTranscriptionComplete(transcription);
       toast.success("Transcription completed.");
-    } catch (error: any) {
-      setError(error.message || "Error transcribing audio.");
-      toast.error("Transcription failed");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message || "Error transcribing audio.");
+        toast.error("Transcription failed");
+      } else {
+        setError("Error transcribing audio.");
+        toast.error("Transcription failed");
+      }
     } finally {
       setIsProcessing(false);
     }
@@ -107,4 +117,35 @@ export function useRecorder(onTranscriptionComplete: (text: string) => void) {
     startRecording,
     stopRecording,
   };
+}
+
+export function useFileUpload(onTranscriptionComplete: (text: string) => void) {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsProcessing(true);
+
+    try {
+      const transcription = await transcribeAudio(file);
+      if (!transcription.trim()) throw new Error("No speech detected.");
+
+      onTranscriptionComplete(transcription);
+      toast.success("File processed successfully");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error("Processing failed", { description: error.message });
+      } else {
+        toast.error("Processing failed");
+      }
+    } finally {
+      setIsProcessing(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  return { fileInputRef, isProcessing, handleFileUpload };
 }

@@ -5,7 +5,7 @@ export default function Logo() {
   return (
     <Link href="/" className="flex flex-row items-center gap-0.5">
       <Image
-        src="/icon.svg"
+        src="/svgs/logo.svg"
         height={40}
         width={40}
         alt="ScribeVoice Logo"

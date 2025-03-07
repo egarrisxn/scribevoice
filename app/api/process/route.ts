@@ -41,11 +41,19 @@ export async function POST(request: Request) {
     return NextResponse.json({
       text: response.choices[0].message.content || "",
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in processing API:", error);
-    return NextResponse.json(
-      { error: error.message || "Failed to process transcription" },
-      { status: 500 },
-    );
+
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: error.message || "Failed to process transcription" },
+        { status: 500 },
+      );
+    } else {
+      return NextResponse.json(
+        { error: "Unknown error occurred while processing the transcription" },
+        { status: 500 },
+      );
+    }
   }
 }
