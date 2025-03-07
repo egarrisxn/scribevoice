@@ -11,11 +11,11 @@ export default async function MainNav() {
   } = await supabase.auth.getSession();
 
   return (
-    <header className="container mx-auto flex w-full items-center justify-between px-3 py-4 sm:p-5">
+    <header className="container mx-auto flex w-full items-center justify-between p-4 sm:p-5">
       <Logo />
-      <nav className="text-primary flex items-center gap-3.5 text-sm font-medium sm:gap-4 sm:text-base">
+      <nav className="text-primary flex items-center gap-4 text-sm font-medium sm:gap-5 sm:text-base">
         {session ? (
-          <div className="flex flex-row items-center gap-3.5 sm:gap-4">
+          <div className="flex flex-row items-center gap-4 sm:gap-5">
             <Link
               href="/dashboard"
               className="underline-offset-2 hover:text-blue-400 hover:underline"

@@ -4,11 +4,9 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "ScribeVerse",
     short_name: "S.V.",
-    description: "Transform your voice into notes, transcripts, lists and more with AI",
+    description:
+      "Transform your voice into notes, transcripts, lists and more with the power of AI!",
     start_url: "/",
-    display: "standalone",
-    theme_color: "#ffffff",
-    background_color: "#ffffff",
     icons: [
       {
         src: "/icons/icon-192.png",
@@ -17,7 +15,7 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/icons/icon-192.png",
+        src: "/icons/maskable-192.png",
         sizes: "192x192",
         type: "image/png",
         purpose: "maskable",
@@ -29,7 +27,7 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/icons/icon-512.png",
+        src: "/icons/maskable-512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",
@@ -38,15 +36,18 @@ export default function manifest(): MetadataRoute.Manifest {
     screenshots: [
       {
         src: "/screenshots/desktop.png",
-        sizes: "1280x720",
+        sizes: "1920x1080",
         type: "image/png",
         form_factor: "wide",
       },
       {
         src: "/screenshots/mobile.png",
-        sizes: "750x1335",
+        sizes: "750x1334",
         type: "image/png",
       },
     ],
+    theme_color: "#000000",
+    background_color: "#000000",
+    display: "standalone",
   };
 }
