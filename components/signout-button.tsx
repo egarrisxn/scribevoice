@@ -1,13 +1,15 @@
 import { signOut } from "@/app/actions";
-import { Button } from "@/components/ui/button";
 
 //! Server-Side Sign Out
 export default function SignOutButton() {
   return (
     <form action={signOut}>
-      <Button variant="link" type="submit">
+      <button
+        type="submit"
+        className="text-primary cursor-pointer text-sm font-medium underline-offset-4 hover:text-blue-400 hover:underline sm:text-base"
+      >
         Sign Out
-      </Button>
+      </button>
     </form>
   );
 }

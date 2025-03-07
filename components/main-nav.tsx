@@ -18,7 +18,7 @@ export default async function MainNav() {
           <div className="flex flex-row items-center gap-4 sm:gap-5">
             <Link
               href="/dashboard"
-              className="underline-offset-2 hover:text-blue-400 hover:underline"
+              className="underline-offset-4 hover:text-blue-400 hover:underline"
             >
               Dashboard
             </Link>
