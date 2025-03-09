@@ -1,9 +1,12 @@
-import Loader from "@/components/loader";
+import { Loader2 } from "lucide-react";
 
-export default function Loading() {
+export default function LoadingPage() {
   return (
-    <section className="grid min-h-screen w-full place-items-center p-4 text-center text-4xl font-extrabold tracking-tight sm:p-6 sm:text-5xl lg:p-0">
-      <Loader />
+    <section className="grid h-dvh w-full place-items-center px-4 text-3xl font-extrabold tracking-tight sm:px-6 lg:px-0">
+      <div className="flex w-full flex-row items-center justify-center space-x-2">
+        <Loader2 className="text-primary size-6 animate-spin sm:size-8" />
+        <span className="text-xl font-semibold sm:text-2xl">Loading...</span>
+      </div>
     </section>
   );
 }

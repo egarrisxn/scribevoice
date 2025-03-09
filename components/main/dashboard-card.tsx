@@ -9,7 +9,7 @@ import RecordAndUpload from "@/components/main/record-and-upload";
 import { type OutputFormat, FormatSelector } from "@/components/main/format-selector";
 import TranscriptionOutput from "@/components/main/transcription-output";
 import Loader from "@/components/loader";
-import SavedTranscriptionsList from "@/components/saved/transcriptions-list";
+import TranscriptionsList from "@/components/saved/transcriptions-list";
 
 export default function DashboardCard() {
   const [rawTranscription, setRawTranscription] = useState("");
@@ -55,7 +55,7 @@ export default function DashboardCard() {
   };
 
   return (
-    <div className="container mx-auto min-h-screen w-full max-w-lg space-y-16 px-4 py-14 sm:max-w-screen-sm sm:space-y-24 md:max-w-screen-md lg:py-28">
+    <div className="mx-auto w-full max-w-3xl space-y-2 px-4">
       <FunCard className="space-y-8 p-6">
         <hr className="border-muted" />
         <RecordAndUpload onTranscriptionComplete={handleTranscriptionComplete} />
@@ -72,7 +72,7 @@ export default function DashboardCard() {
           />
         ) : null}
       </FunCard>
-      <SavedTranscriptionsList />
+      <TranscriptionsList />
     </div>
   );
 }
