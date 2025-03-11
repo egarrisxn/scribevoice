@@ -9,13 +9,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { ScrollArea } from "@/components/ui/scroll-area";
 import FunCard from "@/components/fun-card";
 import { TranscriptionCard } from "@/components/saved/transcription-card";
-
-interface Transcription {
-  id: string;
-  user_id: string;
-  transcription_text: string;
-  created_at: string;
-}
+import type { Transcription } from "@/lib/types";
 
 export default function TranscriptionsList() {
   const [transcriptions, setTranscriptions] = useState<Transcription[]>([]);
@@ -36,10 +30,6 @@ export default function TranscriptionsList() {
     loadTranscriptions();
   }, []);
 
-  if (transcriptions.length === 0) {
-    return null;
-  }
-
   return (
     <Collapsible
       open={isOpen}
@@ -49,29 +39,43 @@ export default function TranscriptionsList() {
       <FunCard className="p-6">
         <hr className="border-muted" />
         <div className="flex items-center justify-between py-6">
-          <CollapsibleTrigger asChild>
+          {transcriptions.length > 0 ? (
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" className="flex items-center gap-2 text-base font-semibold">
+                {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+                <span>Saved Transcriptions ({transcriptions.length})</span>
+              </Button>
+            </CollapsibleTrigger>
+          ) : (
             <Button
               variant="ghost"
-              className="flex cursor-pointer items-center gap-2 text-base leading-none font-semibold"
+              disabled
+              className="flex cursor-not-allowed items-center gap-2 text-base font-semibold opacity-50"
             >
-              {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
-              <span>Saved Transcriptions ({transcriptions.length})</span>
+              <ChevronDown className="size-4" />
+              <span>Saved Transcriptions (0)</span>
             </Button>
-          </CollapsibleTrigger>
+          )}
         </div>
         <hr className="border-muted" />
-        <CollapsibleContent className="x">
-          <div className="py-6">
-            <ScrollArea className="h-[400px]">
-              <div className="space-y-4">
-                {transcriptions.map((transcription) => (
-                  <TranscriptionCard key={transcription.id} transcription={transcription} />
-                ))}
-              </div>
-            </ScrollArea>
-          </div>
-          <hr className="border-muted" />
-        </CollapsibleContent>
+        {transcriptions.length > 0 && (
+          <CollapsibleContent>
+            <div className="py-6">
+              <ScrollArea className="h-[400px]">
+                <div className="space-y-4">
+                  {transcriptions.map((transcription) => (
+                    <TranscriptionCard
+                      key={transcription.id}
+                      transcription={transcription}
+                      setTranscriptions={setTranscriptions} // Pass state updater
+                    />
+                  ))}
+                </div>
+              </ScrollArea>
+            </div>
+            <hr className="border-muted" />
+          </CollapsibleContent>
+        )}
       </FunCard>
     </Collapsible>
   );

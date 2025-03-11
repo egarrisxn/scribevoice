@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import DashboardNav from "@/components/dashboard-nav";
 import DashboardCard from "@/components/main/dashboard-card";
-import MainFooter from "@/components/footer";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -15,7 +15,7 @@ export default function DashboardPage() {
       <div className="mx-auto flex min-h-screen w-full flex-1 items-center justify-center pt-24 pb-8 sm:pt-32 xl:pb-20">
         <DashboardCard />
       </div>
-      <MainFooter />
+      <Footer />
     </section>
   );
 }

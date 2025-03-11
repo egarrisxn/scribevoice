@@ -4,8 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import Logo from "@/components/logo";
 import SignOutButton from "@/components/signout-button";
 import ThemeToggle from "@/components/theme-toggle";
-
-import MainFooter from "@/components/footer";
+import Footer from "@/components/footer";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -65,7 +64,7 @@ export default async function HomePage() {
           )}
         </div>
       </div>
-      <MainFooter />
+      <Footer />
     </section>
   );
 }
