@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import DashboardNav from "@/components/dashboard-nav";
 import DashboardCard from "@/components/main/dashboard-card";
 import MainFooter from "@/components/footer";
-import DashboardNav from "@/components/dashboard-nav";
 
 export const metadata: Metadata = {
   title: "Dashboard",

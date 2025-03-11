@@ -52,7 +52,7 @@ export default function TranscriptionsList() {
           <CollapsibleTrigger asChild>
             <Button
               variant="ghost"
-              className="font-semibol flex cursor-pointer items-center gap-2 text-base leading-none"
+              className="flex cursor-pointer items-center gap-2 text-base leading-none font-semibold"
             >
               {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
               <span>Saved Transcriptions ({transcriptions.length})</span>

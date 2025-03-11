@@ -19,7 +19,6 @@ export default function DashboardCard() {
 
   const handleTranscriptionComplete = async (text: string) => {
     setRawTranscription(text);
-
     try {
       setIsProcessing(true);
       const processed = await processTranscription(text, outputFormat);
@@ -37,7 +36,6 @@ export default function DashboardCard() {
 
   const handleFormatChange = async (format: OutputFormat) => {
     setOutputFormat(format);
-
     if (rawTranscription) {
       try {
         setIsProcessing(true);

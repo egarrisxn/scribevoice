@@ -28,7 +28,7 @@ export function DownloadButton({ transcription }: DownloadButtonProps) {
   return (
     <Button variant="outline" size="sm" className="cursor-pointer" onClick={downloadTranscription}>
       <Download className="mr-1 size-4" />
-      <span>Download</span>
+      Download
     </Button>
   );
 }

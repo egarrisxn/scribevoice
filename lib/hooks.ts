@@ -121,9 +121,20 @@ export function useRecorder(onTranscriptionComplete: (text: string) => void) {
 
 export function useFileUpload(onTranscriptionComplete: (text: string) => void) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+    setIsDesktop(!isMobile);
+  }, []);
+
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isDesktop) {
+      toast.error("File upload is only supported on desktop.");
+      return;
+    }
+
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -147,5 +158,5 @@ export function useFileUpload(onTranscriptionComplete: (text: string) => void) {
     }
   };
 
-  return { fileInputRef, isProcessing, handleFileUpload };
+  return { fileInputRef, isProcessing, handleFileUpload, isDesktop };
 }

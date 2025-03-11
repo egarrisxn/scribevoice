@@ -25,7 +25,7 @@ export default function RecordAndUpload({
   return (
     <div className="space-y-2 py-2">
       <h1 className="text-center font-semibold lg:text-lg">
-        {isMobile ? "Upload Audio File" : "Record or Upload Audio"}
+        {isMobile ? "Browser Not Supported" : "Record or Upload Audio"}
       </h1>
       <div className="flex flex-col items-center gap-0.5">
         {recorder.error && (
@@ -53,8 +53,8 @@ export default function RecordAndUpload({
       <p className="text-muted-foreground mx-auto max-w-[30rem] pt-4 text-center text-xs lg:text-sm">
         {isMobile ? (
           <>
-            Upload an audio file from your device for transcription. Supported formats include MP3,
-            WAV, OGG, M4A, and more.
+            Direct audio recording is not supported by your current browser. Consider using a
+            compatible browser such as Chrome or Firefox.
           </>
         ) : recorder.isMediaRecorderSupported ? (
           <>
@@ -65,8 +65,8 @@ export default function RecordAndUpload({
           </>
         ) : (
           <>
-            Direct audio recording is not supported by your current browser. Please upload an audio
-            file or consider using a compatible browser such as Chrome or Firefox.
+            Direct audio recording is not supported by your current browser. Consider using a
+            compatible browser such as Chrome or Firefox.
           </>
         )}
       </p>
