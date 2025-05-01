@@ -1,8 +1,15 @@
 # **ScribeVoice**
 
-![og](https://github.com/user-attachments/assets/55e48dab-4356-420a-92ce-2dfa52b7a549)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![GitHub repo size](https://img.shields.io/github/repo-size/egarrisxn/scribevoice) ![GitHub last commit](https://img.shields.io/github/last-commit/egarrisxn/scribevoice)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![GitHub repo size](https://img.shields.io/github/repo-size/egarrisxn/scribevoice)
+![GitHub last commit](https://img.shields.io/github/last-commit/egarrisxn/scribevoice)
+[![pnpm](https://img.shields.io/badge/package%20manager-pnpm-blueviolet)](https://pnpm.io)
+[![Next.js](https://img.shields.io/badge/Next.js-v15-black?logo=next.js)](https://nextjs.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-v4-blue?logo=tailwindcss)](https://tailwindcss.com)
+[![Vercel](https://img.shields.io/badge/Vercel-deployed-brightgreen?logo=vercel)](https://international-worldwide.vercel.app)
+
+![og](https://github.com/user-attachments/assets/55e48dab-4356-420a-92ce-2dfa52b7a549)
 
 ## **Overview**
 
