@@ -23,11 +23,11 @@ This template leverages a modern tech stack for a smooth developer experience:
 - **Framework**: [Next.js](https://nextjs.org/) – The leading React framework for hybrid static & server-side rendering.
 - **Deployment**: [Vercel](https://vercel.com) – Optimized for seamless, serverless deployment.
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) – Utility-first CSS for rapid styling.
+- **Icons**: [lucide-react](https://lucide.dev/) – Crisp, open-source React icons.
 - **Linting & Formatting**:
   - [ESLint](https://eslint.org/) – Enforces code quality and best practices.
   - [Prettier](https://prettier.io/) – Automatic code formatting for consistency.
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com/) – A flexible, customizable UI component library.
-- **Icons**: [lucide-react](https://lucide.dev/) – Crisp, open-source React icons.
+
 
 ## **Before You Begin**
 
@@ -63,8 +63,8 @@ Now you're ready to start building! 🚀
 First, clone the repository onto your local machine:
 
 ```bash
-git clone https://github.com/egarrisxn/scribeverse.git my-next-ai-project
-cd my-next-ai-project
+git clone https://github.com/egarrisxn/scribeverse.git
+cd scribeverse
 ```
 
 #### 2. Install Dependencies
