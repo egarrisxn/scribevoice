@@ -38,6 +38,23 @@ export const metadata: Metadata = {
     "ai",
     "vercel",
   ],
+  icons: {
+    icon: {
+      url: "/icons/icon.png",
+      sizes: "192x192",
+      type: "image/png",
+    },
+    apple: {
+      url: "/icons/apple-icon.png",
+      sizes: "180x180",
+      type: "image/png",
+    },
+    other: {
+      rel: "icon",
+      url: "/icons/icon.svg",
+      type: "image/svg+xml",
+    },
+  },
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,

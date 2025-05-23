@@ -1,0 +1,2 @@
+export const MAX_DAILY_TRANSCRIBE_USES = 10;
+export const MAX_DAILY_PROCESS_USES = 20;
