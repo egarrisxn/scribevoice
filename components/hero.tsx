@@ -8,7 +8,7 @@ export default function Hero() {
       <h1 className="text-[3.75rem] leading-none font-bold tracking-tighter sm:text-[6.5rem]">
         ScribeVoice
       </h1>
-      <p className="text-muted-foreground max-w-[22rem] text-lg sm:mt-1 sm:mb-4 sm:max-w-lg sm:text-2xl">
+      <p className="max-w-[22rem] text-lg text-muted-foreground sm:mt-1 sm:mb-4 sm:max-w-lg sm:text-2xl">
         Transform your voice into notes, transcripts, lists and more with the power of AI!
       </p>
       <Link

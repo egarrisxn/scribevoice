@@ -87,7 +87,7 @@ export function FormatSelector({
                     />
                     <div className="flex flex-col">
                       <span>{format.label}</span>
-                      <span className="text-muted-foreground text-xs">{format.description}</span>
+                      <span className="text-xs text-muted-foreground">{format.description}</span>
                     </div>
                   </CommandItem>
                 ))}
@@ -96,7 +96,7 @@ export function FormatSelector({
           </PopoverContent>
         </Popover>
       </div>
-      <p className="text-muted-foreground mx-auto max-w-[30rem] pt-4 text-center text-xs lg:text-sm">
+      <p className="mx-auto max-w-[30rem] pt-4 text-center text-xs text-muted-foreground lg:text-sm">
         Choose your preferred output format. You can then copy or save the results. If the output is
         not satisfactory, please try again.
       </p>

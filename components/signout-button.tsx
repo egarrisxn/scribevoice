@@ -6,7 +6,7 @@ export default function SignOutButton() {
     <form action={signOut}>
       <button
         type="submit"
-        className="text-primary cursor-pointer text-sm font-medium transition-all duration-150 ease-in-out hover:text-blue-400 hover:underline hover:underline-offset-4 sm:text-base"
+        className="cursor-pointer text-sm font-medium text-primary transition-all duration-150 ease-in-out hover:text-blue-400 hover:underline hover:underline-offset-4 sm:text-base"
       >
         Sign Out
       </button>

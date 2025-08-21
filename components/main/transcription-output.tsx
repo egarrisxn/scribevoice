@@ -52,7 +52,7 @@ export default function TranscriptionOutput({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="processed" className="mt-4">
-            <div className="bg-muted/50 rounded-md p-4 whitespace-pre-wrap">
+            <div className="rounded-md bg-muted/50 p-4 whitespace-pre-wrap">
               {processedOutput || "No processed output available."}
             </div>
             <div className="mt-4 flex justify-center space-x-2 sm:justify-end lg:mt-6">
@@ -83,7 +83,7 @@ export default function TranscriptionOutput({
             </div>
           </TabsContent>
           <TabsContent value="raw" className="mt-4">
-            <div className="bg-muted/50 rounded-md p-4 whitespace-pre-wrap">
+            <div className="rounded-md bg-muted/50 p-4 whitespace-pre-wrap">
               {rawTranscription || "No raw transcription available."}
             </div>
             <div className="mt-4 flex justify-center space-x-2 sm:justify-end lg:mt-6">
@@ -115,7 +115,7 @@ export default function TranscriptionOutput({
           </TabsContent>
         </Tabs>
       </div>
-      <p className="text-muted-foreground mx-auto mt-4 text-center text-xs md:text-sm">
+      <p className="mx-auto mt-4 text-center text-xs text-muted-foreground md:text-sm">
         You can switch between the processed output and raw transcription using the tabs above.
       </p>
     </div>

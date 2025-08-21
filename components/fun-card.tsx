@@ -17,7 +17,7 @@ export default function FunCard({ children, className }: CardProps) {
   };
 
   return (
-    <div className="border-accent relative rounded-md border-2 bg-white dark:bg-zinc-900">
+    <div className="relative rounded-md border-2 border-accent bg-white dark:bg-zinc-900">
       <Border className="-top-0.5 -left-0.5 rounded-tl-md border-t-2 border-l-2" />
       <Border className="-top-0.5 -right-0.5 rounded-tr-md border-t-2 border-r-2" />
       <Border className="-bottom-0.5 -left-0.5 rounded-bl-md border-b-2 border-l-2" />

@@ -40,7 +40,7 @@ export function DeleteButton({
     <Button
       variant="ghost"
       size="icon"
-      className="text-muted-foreground hover:text-destructive size-8 cursor-pointer"
+      className="size-8 cursor-pointer text-muted-foreground hover:text-destructive"
       onClick={handleDelete}
       disabled={loading}
     >

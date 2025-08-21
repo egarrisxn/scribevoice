@@ -16,7 +16,7 @@ export default async function HomePage() {
     <section className="mx-auto flex size-full flex-col items-center justify-center px-2 sm:px-4 lg:px-0">
       <header className="absolute top-0 z-10 container mx-auto flex w-full items-center justify-between p-2 sm:p-4 lg:p-6">
         <Logo />
-        <nav className="text-primary flex items-center gap-4 text-sm font-medium sm:gap-5 sm:text-base">
+        <nav className="flex items-center gap-4 text-sm font-medium text-primary sm:gap-5 sm:text-base">
           {session ? (
             <div className="flex flex-row items-center gap-4 sm:gap-5">
               <Link
@@ -44,7 +44,7 @@ export default async function HomePage() {
           <h1 className="text-[3.75rem] leading-none font-bold tracking-tighter sm:text-[6.5rem]">
             ScribeVoice
           </h1>
-          <p className="text-muted-foreground max-w-[22rem] text-lg sm:mt-1 sm:mb-4 sm:max-w-lg sm:text-2xl">
+          <p className="max-w-[22rem] text-lg text-muted-foreground sm:mt-1 sm:mb-4 sm:max-w-lg sm:text-2xl">
             Transform your voice into notes, transcripts, lists and more with the power of AI!
           </p>
           {session ? (

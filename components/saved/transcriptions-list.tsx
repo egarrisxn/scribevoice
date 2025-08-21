@@ -34,7 +34,7 @@ export default function TranscriptionsList() {
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className="border-accent group relative rounded-md border-2 bg-white dark:bg-zinc-900"
+      className="group relative rounded-md border-2 border-accent bg-white dark:bg-zinc-900"
     >
       <FunCard className="p-6">
         <hr className="border-muted" />

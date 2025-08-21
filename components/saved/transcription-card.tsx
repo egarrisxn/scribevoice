@@ -19,7 +19,7 @@ interface TranscriptionCardProps {
 
 export function TranscriptionCard({ transcription, setTranscriptions }: TranscriptionCardProps) {
   return (
-    <Card className="from-background via-background to-accent/40 overflow-hidden rounded bg-gradient-to-t shadow">
+    <Card className="overflow-hidden rounded bg-gradient-to-t from-background via-background to-accent/40 shadow">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div>
@@ -36,7 +36,7 @@ export function TranscriptionCard({ transcription, setTranscriptions }: Transcri
         </div>
       </CardHeader>
       <CardContent className="pb-2">
-        <div className="bg-muted/50 max-h-[150px] overflow-y-auto rounded-md p-3 text-sm whitespace-pre-wrap">
+        <div className="max-h-[150px] overflow-y-auto rounded-md bg-muted/50 p-3 text-sm whitespace-pre-wrap">
           <p>{transcription.transcription_text}</p>
         </div>
       </CardContent>

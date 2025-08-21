@@ -26,7 +26,7 @@ export default function RecordButton({
         onClick={stopRecording}
         size="lg"
         variant="outline"
-        className="text-destructive cursor-pointer"
+        className="cursor-pointer text-destructive"
       >
         <Square className="mr-1 size-4" /> <span>Stop Recording</span>
       </Button>

@@ -10,7 +10,7 @@ export default function DashboardNav() {
       <nav className="flex items-center gap-4 sm:gap-5">
         <Link
           href="/"
-          className="text-primary cursor-pointer text-sm font-medium transition-all duration-150 ease-in-out hover:text-blue-400 hover:underline hover:underline-offset-4 sm:text-base"
+          className="cursor-pointer text-sm font-medium text-primary transition-all duration-150 ease-in-out hover:text-blue-400 hover:underline hover:underline-offset-4 sm:text-base"
         >
           Home
         </Link>

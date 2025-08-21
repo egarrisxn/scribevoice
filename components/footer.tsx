@@ -2,8 +2,8 @@ import GitHubIcon from "@/components/icons/github";
 
 export default function Footer() {
   return (
-    <footer className="border-foreground/5 container w-full border-t">
-      <div className="text-muted-foreground mx-auto flex flex-col items-center justify-center gap-4 py-8 text-center text-sm md:flex-row md:justify-between md:p-6">
+    <footer className="container w-full border-t border-foreground/5">
+      <div className="mx-auto flex flex-col items-center justify-center gap-4 py-8 text-center text-sm text-muted-foreground md:flex-row md:justify-between md:p-6">
         <p className="flex items-center">
           &copy; {new Date().getFullYear()} ScribeVoice by{" "}
           <a
@@ -17,7 +17,7 @@ export default function Footer() {
           <p className="order-2 flex md:order-1">Powered by OpenAI.</p>
           <a
             href="https://github.com/egarrisxn/xprod"
-            className="hover:text-primary order-1 flex md:order-2"
+            className="order-1 flex hover:text-primary md:order-2"
           >
             <GitHubIcon className="size-5" />
           </a>

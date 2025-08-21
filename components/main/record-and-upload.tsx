@@ -53,7 +53,7 @@ export default function RecordAndUpload({
           <UploadButton {...fileUpload} />
         </div>
       </div>
-      <p className="text-muted-foreground mx-auto max-w-[30rem] pt-4 text-center text-xs lg:text-sm">
+      <p className="mx-auto max-w-[30rem] pt-4 text-center text-xs text-muted-foreground lg:text-sm">
         {isMobile ? (
           <>
             Direct audio recording is not supported by your current browser. Consider using a

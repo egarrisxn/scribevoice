@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function TermsOfServicePage() {
   return (
     <section className="mx-auto max-w-2xl space-y-2 px-4">
-      <h1 className="text-primary text-3xl font-bold">Terms of Service</h1>
+      <h1 className="text-3xl font-bold text-primary">Terms of Service</h1>
       <p>
         THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
         BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
