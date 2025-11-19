@@ -11,7 +11,11 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const formats = [
   {
@@ -48,7 +52,9 @@ export function FormatSelector({
 
   return (
     <div className="space-y-2 py-2">
-      <h1 className="text-center font-semibold lg:text-lg">Select Output Format</h1>
+      <h1 className="text-center font-semibold lg:text-lg">
+        Select Output Format
+      </h1>
       <div className="space-y-2">
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -59,7 +65,9 @@ export function FormatSelector({
               aria-expanded={open}
               className="mx-auto flex w-full max-w-[20rem] cursor-pointer justify-between"
             >
-              {value ? formats.find((format) => format.value === value)?.label : "Select format..."}
+              {value
+                ? formats.find((format) => format.value === value)?.label
+                : "Select format..."}
               <ChevronsUpDown className="ml-2 size-5 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -82,12 +90,14 @@ export function FormatSelector({
                     <Check
                       className={cn(
                         "mr-1 size-4 lg:size-5",
-                        value === format.value ? "opacity-100" : "opacity-0",
+                        value === format.value ? "opacity-100" : "opacity-0"
                       )}
                     />
                     <div className="flex flex-col">
                       <span>{format.label}</span>
-                      <span className="text-xs text-muted-foreground">{format.description}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {format.description}
+                      </span>
                     </div>
                   </CommandItem>
                 ))}
@@ -96,9 +106,9 @@ export function FormatSelector({
           </PopoverContent>
         </Popover>
       </div>
-      <p className="mx-auto max-w-[30rem] pt-4 text-center text-xs text-muted-foreground lg:text-sm">
-        Choose your preferred output format. You can then copy or save the results. If the output is
-        not satisfactory, please try again.
+      <p className="mx-auto max-w-120 pt-4 text-center text-xs text-muted-foreground lg:text-sm">
+        Choose your preferred output format. You can then copy or save the
+        results. If the output is not satisfactory, please try again.
       </p>
     </div>
   );

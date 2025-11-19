@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+
 import { useState, useRef, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { transcribeAudio } from "@/lib/openai";
@@ -5,12 +7,13 @@ import { getMimeType, createAudioBlob } from "@/lib/helpers";
 
 export function useRecorder(
   onTranscriptionComplete: (text: string) => void,
-  onUsageLimitReached: () => void, // --- NEW PARAMETER ---
+  onUsageLimitReached: () => void // --- NEW PARAMETER ---
 ) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isMediaRecorderSupported, setIsMediaRecorderSupported] = useState(true);
+  const [isMediaRecorderSupported, setIsMediaRecorderSupported] =
+    useState(true);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -93,10 +96,16 @@ export function useRecorder(
 
     const audioBlob = createAudioBlob(audioChunksRef.current);
 
+    setIsProcessing(true);
     try {
-      setIsProcessing(true);
       const transcription = await transcribeAudio(audioBlob);
-      if (!transcription.trim()) throw new Error("No speech detected.");
+      if (!transcription.trim()) {
+        const msg = "No speech detected.";
+        setError(msg);
+        toast.error("Transcription failed", { description: msg });
+        setIsProcessing(false);
+        return;
+      }
 
       onTranscriptionComplete(transcription);
       toast.success("Transcription completed.");
@@ -116,9 +125,8 @@ export function useRecorder(
         setError("An unknown error occurred during transcription.");
         toast.error("Transcription failed");
       }
-    } finally {
-      setIsProcessing(false);
     }
+    setIsProcessing(false);
   }, [onTranscriptionComplete, onUsageLimitReached]);
 
   return {
@@ -133,7 +141,7 @@ export function useRecorder(
 
 export function useFileUpload(
   onTranscriptionComplete: (text: string) => void,
-  onUsageLimitReached: () => void, // --- NEW PARAMETER ---
+  onUsageLimitReached: () => void // --- NEW PARAMETER ---
 ) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
@@ -141,7 +149,9 @@ export function useFileUpload(
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+    const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(
+      navigator.userAgent
+    );
     setIsDesktop(!isMobile);
   }, []);
 
@@ -160,7 +170,14 @@ export function useFileUpload(
 
       try {
         const transcription = await transcribeAudio(file);
-        if (!transcription.trim()) throw new Error("No speech detected.");
+        if (!transcription.trim()) {
+          const msg = "No speech detected.";
+          setError(msg);
+          toast.error("Processing failed", { description: msg });
+          setIsProcessing(false);
+          if (fileInputRef.current) fileInputRef.current.value = "";
+          return;
+        }
 
         onTranscriptionComplete(transcription);
         toast.success("File processed successfully");
@@ -180,12 +197,11 @@ export function useFileUpload(
           setError("An unknown error occurred during file processing.");
           toast.error("Processing failed");
         }
-      } finally {
-        setIsProcessing(false);
-        if (fileInputRef.current) fileInputRef.current.value = "";
       }
+      setIsProcessing(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
     },
-    [isDesktop, onTranscriptionComplete, onUsageLimitReached],
+    [isDesktop, onTranscriptionComplete, onUsageLimitReached]
   );
 
   return { fileInputRef, isProcessing, handleFileUpload, isDesktop, error };

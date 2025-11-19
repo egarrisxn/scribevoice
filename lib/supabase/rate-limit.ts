@@ -1,11 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
-import { MAX_DAILY_TRANSCRIBE_USES, MAX_DAILY_PROCESS_USES } from "@/lib/constants";
+import {
+  MAX_DAILY_TRANSCRIBE_USES,
+  MAX_DAILY_PROCESS_USES,
+} from "@/lib/constants";
 
 type UsageType = "transcribe" | "process";
 
 export async function checkAndIncrementUsage(
   userId: string,
-  usageType: UsageType,
+  usageType: UsageType
 ): Promise<{ allowed: boolean; remaining: number }> {
   const supabase = await createClient();
   const today = new Date().toISOString().split("T")[0];
@@ -28,7 +31,8 @@ export async function checkAndIncrementUsage(
 
   let allowed = false;
   let remaining = 0;
-  const updateObject: { transcribe_count?: number; process_count?: number } = {};
+  const updateObject: { transcribe_count?: number; process_count?: number } =
+    {};
 
   if (usageType === "transcribe") {
     if (currentTranscribeCount < MAX_DAILY_TRANSCRIBE_USES) {
@@ -53,19 +57,21 @@ export async function checkAndIncrementUsage(
   }
 
   if (allowed) {
-    const { error: upsertError } = await supabase.from("user_daily_usage").upsert(
-      {
-        user_id: userId,
-        usage_date: today,
-        transcribe_count: currentTranscribeCount,
-        process_count: currentProcessCount,
-        last_updated: new Date().toISOString(),
-      },
-      {
-        onConflict: "user_id,usage_date", // Use the unique constraint for upsert
-        ignoreDuplicates: false, // Ensure it updates if exists
-      },
-    );
+    const { error: upsertError } = await supabase
+      .from("user_daily_usage")
+      .upsert(
+        {
+          user_id: userId,
+          usage_date: today,
+          transcribe_count: currentTranscribeCount,
+          process_count: currentProcessCount,
+          last_updated: new Date().toISOString(),
+        },
+        {
+          onConflict: "user_id,usage_date", // Use the unique constraint for upsert
+          ignoreDuplicates: false, // Ensure it updates if exists
+        }
+      );
 
     if (upsertError) {
       console.error("Error upserting user daily usage:", upsertError);
@@ -78,7 +84,7 @@ export async function checkAndIncrementUsage(
 
 // Function to fetch remaining uses for display in UI
 export async function getRemainingUses(
-  userId: string,
+  userId: string
 ): Promise<{ transcribeRemaining: number; processRemaining: number }> {
   const supabase = await createClient();
   const today = new Date().toISOString().split("T")[0];

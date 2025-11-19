@@ -40,7 +40,9 @@ export default function TranscriptionOutput({
 
   return (
     <div className="w-full space-y-2 px-4 py-2">
-      <h1 className="text-center font-semibold lg:text-lg">Transcription Results</h1>
+      <h1 className="text-center font-semibold lg:text-lg">
+        Transcription Results
+      </h1>
       <div className="mt-4">
         <Tabs defaultValue="processed">
           <TabsList className="grid w-full grid-cols-2">
@@ -116,7 +118,8 @@ export default function TranscriptionOutput({
         </Tabs>
       </div>
       <p className="mx-auto mt-4 text-center text-xs text-muted-foreground md:text-sm">
-        You can switch between the processed output and raw transcription using the tabs above.
+        You can switch between the processed output and raw transcription using
+        the tabs above.
       </p>
     </div>
   );

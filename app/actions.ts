@@ -60,6 +60,7 @@ export async function saveTranscription(transcription: string) {
 export async function deleteTranscription(id: string) {
   const supabase = await createClient();
   const { error } = await supabase.from("transcriptions").delete().eq("id", id);
-  if (error) throw new Error(`Failed to delete transcription: ${error.message} `);
+  if (error)
+    throw new Error(`Failed to delete transcription: ${error.message} `);
   revalidatePath("/dashboard");
 }

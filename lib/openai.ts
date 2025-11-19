@@ -18,8 +18,12 @@ export async function transcribeAudio(audioBlob: Blob): Promise<string> {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
-      throw new Error(errorData.error || `Transcription failed: ${response.statusText}`);
+      const errorData = await response
+        .json()
+        .catch(() => ({ error: "Unknown error" }));
+      throw new Error(
+        errorData.error || `Transcription failed: ${response.statusText}`
+      );
     }
 
     const data = await response.json();
@@ -32,7 +36,7 @@ export async function transcribeAudio(audioBlob: Blob): Promise<string> {
 
 export async function processTranscription(
   transcription: string,
-  outputFormat: "notes" | "transcript" | "list" | "summary",
+  outputFormat: "notes" | "transcript" | "list" | "summary"
 ): Promise<string> {
   try {
     const response = await fetch("/api/process", {
@@ -47,8 +51,12 @@ export async function processTranscription(
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
-      throw new Error(errorData.error || `Processing failed: ${response.statusText}`);
+      const errorData = await response
+        .json()
+        .catch(() => ({ error: "Unknown error" }));
+      throw new Error(
+        errorData.error || `Processing failed: ${response.statusText}`
+      );
     }
 
     const data = await response.json();

@@ -13,13 +13,18 @@ export async function GET(_req: Request) {
   }
 
   try {
-    const { transcribeRemaining, processRemaining } = await getRemainingUses(user.id);
+    const { transcribeRemaining, processRemaining } = await getRemainingUses(
+      user.id
+    );
     return NextResponse.json({
       transcribeRemaining,
       processRemaining,
     });
   } catch (error) {
     console.error("Error fetching usage data:", error);
-    return NextResponse.json({ error: "Failed to retrieve usage data" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to retrieve usage data" },
+      { status: 500 }
+    );
   }
 }

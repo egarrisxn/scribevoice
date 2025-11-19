@@ -1,6 +1,8 @@
 import React from "react";
 
-export default function GitHubRefinedIcon(props: React.SVGProps<SVGSVGElement>) {
+export default function GitHubRefinedIcon(
+  props: React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}

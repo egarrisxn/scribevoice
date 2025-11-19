@@ -1,5 +1,10 @@
 export function getMimeType(): string {
-  const mimeTypes = ["audio/webm;codecs=opus", "audio/ogg;codecs=opus", "audio/mp4", "audio/mpeg"];
+  const mimeTypes = [
+    "audio/webm;codecs=opus",
+    "audio/ogg;codecs=opus",
+    "audio/mp4",
+    "audio/mpeg",
+  ];
   for (const type of mimeTypes) {
     if (MediaRecorder.isTypeSupported(type)) {
       return type;

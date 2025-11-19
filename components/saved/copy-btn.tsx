@@ -19,7 +19,12 @@ export function CopyButton({ text, id }: CopyButtonProps) {
   };
 
   return (
-    <Button variant="outline" size="sm" className="mr-2 cursor-pointer" onClick={copyToClipboard}>
+    <Button
+      variant="outline"
+      size="sm"
+      className="mr-2 cursor-pointer"
+      onClick={copyToClipboard}
+    >
       {copied === id ? (
         <>
           <Check className="mr-1 size-4" /> <span>Copied</span>

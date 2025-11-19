@@ -70,19 +70,6 @@ export const metadata: Metadata = {
     creator: siteConfig.socialHandle,
     site: siteConfig.socialHandle,
   },
-  appleWebApp: {
-    capable: true,
-    title: siteConfig.name,
-    startupImage: siteConfig.ogImage,
-    statusBarStyle: "black-translucent",
-  },
-  formatDetection: {
-    telephone: true,
-    date: true,
-    address: true,
-    email: true,
-    url: true,
-  },
 };
 
 export const viewport: Viewport = {
@@ -94,13 +81,19 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html suppressHydrationWarning lang="en">
       <head>
         <meta name="apple-mobile-web-app-title" content="scribevoice" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

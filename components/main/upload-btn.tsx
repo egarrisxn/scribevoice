@@ -7,7 +7,10 @@ interface AudioProps {
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function UploadButton({ fileInputRef, handleFileUpload }: AudioProps) {
+export default function UploadButton({
+  fileInputRef,
+  handleFileUpload,
+}: AudioProps) {
   return (
     <div className="flex w-full items-center sm:w-auto">
       <Input

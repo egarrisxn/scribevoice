@@ -17,7 +17,8 @@ export default function RecordButton({
   if (isProcessing)
     return (
       <Button disabled size="lg">
-        <Loader2 className="mr-1 size-4 animate-spin" /> <span>Processing...</span>
+        <Loader2 className="mr-1 size-4 animate-spin" />{" "}
+        <span>Processing...</span>
       </Button>
     );
   return isRecording ? (

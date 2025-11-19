@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -26,13 +27,25 @@ export default function ThemeToggle() {
       value={theme || resolvedTheme}
       onValueChange={(value) => value && setTheme(value)}
     >
-      <ToggleGroupItem value="system" aria-label="Toggle system theme" className="cursor-pointer">
+      <ToggleGroupItem
+        value="system"
+        aria-label="Toggle system theme"
+        className="cursor-pointer"
+      >
         <Computer className="size-4" />
       </ToggleGroupItem>
-      <ToggleGroupItem value="light" aria-label="Toggle light theme" className="cursor-pointer">
+      <ToggleGroupItem
+        value="light"
+        aria-label="Toggle light theme"
+        className="cursor-pointer"
+      >
         <Sun className="size-4" />
       </ToggleGroupItem>
-      <ToggleGroupItem value="dark" aria-label="Toggle dark theme" className="cursor-pointer">
+      <ToggleGroupItem
+        value="dark"
+        aria-label="Toggle dark theme"
+        className="cursor-pointer"
+      >
         <Moon className="size-4" />
       </ToggleGroupItem>
     </ToggleGroup>

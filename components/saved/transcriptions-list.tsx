@@ -5,7 +5,11 @@ import { toast } from "sonner";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import FunCard from "@/components/fun-card";
 import { TranscriptionCard } from "@/components/saved/transcription-card";
@@ -41,8 +45,15 @@ export default function TranscriptionsList() {
         <div className="flex items-center justify-between py-6">
           {transcriptions.length > 0 ? (
             <CollapsibleTrigger asChild>
-              <Button variant="ghost" className="flex items-center gap-2 text-base font-semibold">
-                {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 text-base font-semibold"
+              >
+                {isOpen ? (
+                  <ChevronUp className="size-4" />
+                ) : (
+                  <ChevronDown className="size-4" />
+                )}
                 <span>Saved Transcriptions ({transcriptions.length})</span>
               </Button>
             </CollapsibleTrigger>
@@ -67,7 +78,7 @@ export default function TranscriptionsList() {
                     <TranscriptionCard
                       key={transcription.id}
                       transcription={transcription}
-                      setTranscriptions={setTranscriptions} // Pass state updater
+                      setTranscriptions={setTranscriptions}
                     />
                   ))}
                 </div>

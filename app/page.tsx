@@ -45,7 +45,8 @@ export default async function HomePage() {
             ScribeVoice
           </h1>
           <p className="max-w-[22rem] text-lg text-muted-foreground sm:mt-1 sm:mb-4 sm:max-w-lg sm:text-2xl">
-            Transform your voice into notes, transcripts, lists and more with the power of AI!
+            Transform your voice into notes, transcripts, lists and more with
+            the power of AI!
           </p>
           {session ? (
             <Link

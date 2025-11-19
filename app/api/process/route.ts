@@ -8,6 +8,18 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+type OutputFormat = "notes" | "transcript" | "list" | "summary";
+
+const formatInstructions: Record<OutputFormat, string> = {
+  notes:
+    "Convert this transcription into concise, well-organized notes with headings, bullet points, and highlighting key concepts.",
+  transcript:
+    "Format this as a clean, readable transcript with speaker labels if multiple speakers are detected.",
+  list: "Convert this transcription into a structured list of action items, tasks, or key points.",
+  summary:
+    "Create a concise summary of the main points from this transcription in a few paragraphs.",
+};
+
 export async function POST(request: Request) {
   const supabase = await createClient();
   const {
@@ -20,33 +32,39 @@ export async function POST(request: Request) {
 
   try {
     // --- Rate Limiting Check ---
-    const { allowed, remaining } = await checkAndIncrementUsage(user.id, "process");
+    const { allowed, remaining } = await checkAndIncrementUsage(
+      user.id,
+      "process"
+    );
     console.log(`Remaining uses for user ${user.id}: ${remaining}`);
     if (!allowed) {
       return NextResponse.json(
         {
           error: `Daily processing limit reached (${MAX_DAILY_PROCESS_USES} per day). Please try again tomorrow.`,
         },
-        { status: 429 }, // 429 Too Many Requests
+        { status: 429 } // 429 Too Many Requests
       );
     }
     // --- End Rate Limiting Check ---
 
-    const { transcription, outputFormat } = await request.json();
+    const body = await request.json();
+    const transcription = body?.transcription as string | undefined;
+    const outputFormat =
+      (body?.outputFormat as OutputFormat | undefined) ?? "summary";
 
     if (!transcription) {
-      return NextResponse.json({ error: "No transcription provided" }, { status: 400 });
+      return NextResponse.json(
+        { error: "No transcription provided" },
+        { status: 400 }
+      );
     }
 
-    const formatInstructions: Record<string, string> = {
-      notes:
-        "Convert this transcription into concise, well-organized notes with headings, bullet points, and highlighting key concepts.",
-      transcript:
-        "Format this as a clean, readable transcript with speaker labels if multiple speakers are detected.",
-      list: "Convert this transcription into a structured list of action items, tasks, or key points.",
-      summary:
-        "Create a concise summary of the main points from this transcription in a few paragraphs.",
-    };
+    if (!formatInstructions[outputFormat]) {
+      return NextResponse.json(
+        { error: "Invalid output format" },
+        { status: 400 }
+      );
+    }
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -72,73 +90,13 @@ export async function POST(request: Request) {
     if (error instanceof Error) {
       return NextResponse.json(
         { error: error.message || "Failed to process transcription" },
-        { status: 500 },
+        { status: 500 }
       );
     } else {
       return NextResponse.json(
         { error: "Unknown error occurred while processing the transcription" },
-        { status: 500 },
+        { status: 500 }
       );
     }
   }
 }
-
-// import { NextResponse } from "next/server";
-// import OpenAI from "openai";
-
-// const openai = new OpenAI({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-
-// export async function POST(request: Request) {
-//   try {
-//     const { transcription, outputFormat } = await request.json();
-
-//     if (!transcription) {
-//       return NextResponse.json({ error: "No transcription provided" }, { status: 400 });
-//     }
-
-//     const formatInstructions: Record<string, string> = {
-//       notes:
-//         "Convert this transcription into concise, well-organized notes with headings, bullet points, and highlighting key concepts.",
-//       transcript:
-//         "Format this as a clean, readable transcript with speaker labels if multiple speakers are detected.",
-//       list: "Convert this transcription into a structured list of action items, tasks, or key points.",
-//       summary:
-//         "Create a concise summary of the main points from this transcription in a few paragraphs.",
-//     };
-
-//     const response = await openai.chat.completions.create({
-//       model: "gpt-4o",
-//       messages: [
-//         {
-//           role: "system",
-//           content: `You are an expert assistant that converts voice transcriptions into well-formatted ${outputFormat}. ${formatInstructions[outputFormat]}`,
-//         },
-//         {
-//           role: "user",
-//           content: transcription,
-//         },
-//       ],
-//       temperature: 0.7,
-//     });
-
-//     return NextResponse.json({
-//       text: response.choices[0].message.content || "",
-//     });
-//   } catch (error: unknown) {
-//     console.error("Error in processing API:", error);
-
-//     if (error instanceof Error) {
-//       return NextResponse.json(
-//         { error: error.message || "Failed to process transcription" },
-//         { status: 500 },
-//       );
-//     } else {
-//       return NextResponse.json(
-//         { error: "Unknown error occurred while processing the transcription" },
-//         { status: 500 },
-//       );
-//     }
-//   }
-// }

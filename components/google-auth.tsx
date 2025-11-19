@@ -10,7 +10,13 @@ export default function GoogleAuth() {
         variant="outline"
         className="w-full cursor-pointer bg-white text-black dark:hover:bg-slate-300 dark:hover:text-black"
       >
-        <Image src="/svgs/google.svg" alt="Google" width={20} height={20} className="mr-1" />
+        <Image
+          src="/svgs/google.svg"
+          alt="Google"
+          width={20}
+          height={20}
+          className="mr-1"
+        />
         Google
       </Button>
     </form>

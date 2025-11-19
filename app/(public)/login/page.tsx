@@ -13,7 +13,9 @@ export default function Login() {
     <FunCard className="mx-auto max-w-lg space-y-2 p-4 sm:py-12">
       <div className="space-y-2 py-2 text-center">
         <h1 className="text-4xl font-bold tracking-tight">Welcome back!</h1>
-        <h2 className="text-sm text-muted-foreground">Log in to your account to continue.</h2>
+        <h2 className="text-sm text-muted-foreground">
+          Log in to your account to continue.
+        </h2>
       </div>
       <div className="flex flex-row items-center justify-center gap-3 px-6 pt-3 sm:gap-4">
         <GitHubAuth />
