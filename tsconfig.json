@@ -29,7 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "next-env.d.ts",
-    "next-auth.d.ts",
     "eslint-config-next.d.ts"
   ],
   "exclude": ["node_modules"]
