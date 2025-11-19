@@ -7,7 +7,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "prebuild": "pnpm run lint",
     "dev": "next dev",
     "build": "next build",
