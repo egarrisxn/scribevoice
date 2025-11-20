@@ -14,7 +14,7 @@ export async function checkAndIncrementUsage(
   const today = new Date().toISOString().split("T")[0];
 
   const { data: usage, error } = await supabase
-    .from("user_daily_usage")
+    .from("scribevoice_daily_usage")
     .select("transcribe_count, process_count")
     .eq("user_id", userId)
     .eq("usage_date", today)
@@ -58,7 +58,7 @@ export async function checkAndIncrementUsage(
 
   if (allowed) {
     const { error: upsertError } = await supabase
-      .from("user_daily_usage")
+      .from("scribevoice_daily_usage")
       .upsert(
         {
           user_id: userId,
@@ -90,7 +90,7 @@ export async function getRemainingUses(
   const today = new Date().toISOString().split("T")[0];
 
   const { data: usage, error } = await supabase
-    .from("user_daily_usage")
+    .from("scribevoice_daily_usage")
     .select("transcribe_count, process_count")
     .eq("user_id", userId)
     .eq("usage_date", today)
