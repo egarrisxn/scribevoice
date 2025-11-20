@@ -49,7 +49,7 @@ export async function saveTranscription(transcription: string) {
   if (userError) throw userError;
   if (!user) throw new Error("User not authenticated");
 
-  const { error } = await supabase.from("transcriptions").insert({
+  const { error } = await supabase.from("scribevoice_transcriptions").insert({
     user_id: user.id,
     transcription_text: transcription,
   });
@@ -59,7 +59,10 @@ export async function saveTranscription(transcription: string) {
 
 export async function deleteTranscription(id: string) {
   const supabase = await createClient();
-  const { error } = await supabase.from("transcriptions").delete().eq("id", id);
+  const { error } = await supabase
+    .from("scribevoice_scribevoice_transcriptions")
+    .delete()
+    .eq("id", id);
   if (error)
     throw new Error(`Failed to delete transcription: ${error.message} `);
   revalidatePath("/dashboard");
