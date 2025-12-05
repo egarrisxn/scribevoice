@@ -22,7 +22,9 @@ export default function TranscriptionsList() {
   useEffect(() => {
     const loadTranscriptions = async () => {
       const supabase = createClient();
-      const { data, error } = await supabase.from("transcriptions").select("*");
+      const { data, error } = await supabase
+        .from("scribevoice_transcriptions")
+        .select("*");
       if (error) {
         console.error("Error fetching transcriptions:", error);
         toast.error("Failed to load transcriptions.");
